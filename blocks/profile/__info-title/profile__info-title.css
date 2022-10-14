@@ -1,0 +1,9 @@
+.profile__info-title {
+  margin: 0;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 42px;
+  line-height: 48px;
+  font-style: normal;
+  font-weight: 500;
+  color: #FFFFFF;
+}
