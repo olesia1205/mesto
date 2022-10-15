@@ -4,10 +4,10 @@
   background-image: url(../../../images/like-button_disabled.svg);
   border: 0;
   padding: 0;
+  margin: auto 5px;
   background-color: #FFFFFF;
   background-size: cover;
-  position: absolute;
-  right: 20px;
-  bottom: 30px;
+  align-self: center;
+  padding: auto 5px;
 }
 

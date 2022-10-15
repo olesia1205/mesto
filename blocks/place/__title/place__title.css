@@ -1,11 +1,13 @@
 .place__title {
   margin: 0;
-  padding-top: 25px;
-  padding-left: 21px;
+  padding: 25px 0 31px;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 24px;
   line-height: 29px;
   font-style: normal;
   font-weight: 900;
   color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
