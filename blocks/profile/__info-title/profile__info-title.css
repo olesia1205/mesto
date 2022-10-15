@@ -7,3 +7,18 @@
   font-weight: 500;
   color: #FFFFFF;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__info-title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .profile__info-title {
+    font-size: 27px;
+    line-height: 33px;
+  }
+}

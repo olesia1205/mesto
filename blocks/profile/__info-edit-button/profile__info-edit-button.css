@@ -6,4 +6,25 @@
   background-color: #000000;
   align-self: baseline;
   margin-left: 18px;
+  background-size: cover;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__info-edit-button {
+    margin-left: 12px;
+    width: 19px;
+    height: 19px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .profile__info-edit-button {
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: -28px;
+    bottom: 6px;
+  }
+}
+
