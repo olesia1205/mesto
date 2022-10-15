@@ -1,0 +1,10 @@
+.place {
+  background-color: #FFFFFF;
+  width: 282px;
+  height: 361px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
