@@ -1,8 +1,5 @@
 .profile__info {
   margin-left: 30px;
-  display: grid;
-  grid-template-columns: 1fr 24px;
-  grid-template-rows: repeat(2, min-content);
-  column-gap: 18px;
-  row-gap: 16px;
+  display: flex;
+  flex-direction: column;
 }

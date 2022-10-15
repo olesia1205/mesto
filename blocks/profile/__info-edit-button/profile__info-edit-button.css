@@ -1,5 +1,9 @@
 .profile__info-edit-button{
+  background-image: url(../../../images/edit-button.svg);
   width: 24px;
   height: 24px;
-  align-self: end;
+  border: 0;
+  background-color: #000000;
+  align-self: baseline;
+  margin-left: 18px;
 }

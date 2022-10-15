@@ -2,6 +2,7 @@
   width: 100%;
   min-height: 120px;
   display: flex;
-  margin-bottom: 50px;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 50px;
 }
