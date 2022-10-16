@@ -12,3 +12,14 @@
   color: #000000;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
+.popup__info:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 630px) {
+  .popup__info {
+    margin: 30px 22px 45px;
+    width: 238px;
+  }
+}
