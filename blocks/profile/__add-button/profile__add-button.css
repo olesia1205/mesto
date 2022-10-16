@@ -6,6 +6,11 @@
   padding: 0;
   background-color: #000000;
   background-size: cover;
+  transition: opacity 0.35s linear;
+}
+
+.profile__add-button:hover {
+  opacity: 60%;
 }
 
 @media screen and (max-width: 768px) {

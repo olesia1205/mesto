@@ -6,6 +6,11 @@
   height: 50px;
   background-color: #000000;
   border-radius: 2px;
+  transition: opacity 0.35s linear;
+}
+
+.popup__submit-button:hover {
+  opacity: 80%;
 }
 
 @media screen and (max-width: 630px) {
