@@ -30,3 +30,4 @@
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 @import url(../blocks/popup/__submit-button-content/popup__submit-button-content.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/_is-opened/popup_is-opened.css);

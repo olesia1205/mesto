@@ -1,7 +1,7 @@
 .place__like-button {
   width: 22px;
   height: 19px;
-  background-image: url(../../../images/like-button_disabled.svg);
+  background-image: url(../../../images/like-button_status_disabled.svg);
   border: 0;
   padding: 0;
   margin: auto 5px;
@@ -16,7 +16,3 @@
   opacity: 50%;
 }
 
-.place__like-button:active {
-  background-image: url(../../../images/like-button_active.svg);
-  opacity: 1;
-}
