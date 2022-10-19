@@ -1,8 +1,7 @@
 .popup__info {
-  padding: 0 0 11px;
-  margin: 30px 36px 48px;
+  padding: 0 0 10px;
+  margin: 30px 36px 0;
   width: 358px;
-  height: 14px;
   border: none;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 14px;

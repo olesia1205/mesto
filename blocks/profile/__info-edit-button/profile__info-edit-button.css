@@ -8,6 +8,7 @@
   margin-left: 18px;
   background-size: cover;
   transition: opacity 0.35s linear;
+  cursor: pointer;
 }
 
 .profile__info-edit-button:hover {
