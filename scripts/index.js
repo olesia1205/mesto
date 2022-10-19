@@ -44,7 +44,7 @@ function addName(evt) {
 
 function addJob(evt) {
   evt.preventDefault();
-  if (nameInput.value !== '') {
+  if (jobInput.value !== '') {
     jobProfil.textContent = jobInput.value;
   } else {
     closePopup();

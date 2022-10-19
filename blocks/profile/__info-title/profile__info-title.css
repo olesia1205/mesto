@@ -9,16 +9,28 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 680px;
+  max-width: 400px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1150px) {
   .profile__info-title {
-    font-size: 30px;
-    line-height: 36px;
+    max-width: 350px;
   }
 }
 
+@media screen and (max-width: 800px) {
+  .profile__info-title {
+    font-size: 30px;
+    line-height: 36px;
+    max-width: 290px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .profile__info-title {
+    max-width: 220px;
+  }
+}
 
 @media screen and (max-width: 425px) {
   .profile__info-title {
