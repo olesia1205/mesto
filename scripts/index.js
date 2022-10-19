@@ -23,27 +23,35 @@ popupCloseButtonElement.addEventListener('click', closePopup);
 popupElement.addEventListener('click', closePopupByClickOnOverlay);
 
 //Редактирование имени и информации о себе
-// Находим форму в DOM
-let formElement = document.querySelector('.popup__container');
 
-// Находим поля формы в DOM
+let formElement = document.querySelector('.popup__container');
 let nameInput = formElement.querySelector('.popup__name');
 let jobInput = formElement.querySelector('.popup__info');
+const popupSubmitButton = formElement.querySelector('.popup__submit-button');
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы можем определить свою логику отправки.
-                                                // О том, как это делать, расскажем позже.
+const profilElement = document.querySelector('.profile');
+let nameProfil = profilElement.querySelector('.profile__info-title');
+let jobProfil = profilElement.querySelector('.profile__info-subtitle');
 
-    // Получите значение полей jobInput и nameInput из свойства value
-
-    // Выберите элементы, куда должны быть вставлены значения полей
-
-    // Вставьте новые значения с помощью textContent
+function addName(evt) {
+  evt.preventDefault();
+  if (nameInput.value !== '') {
+    nameProfil.textContent = nameInput.value;
+  } else {
+    closePopup();
+  }
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+function addJob(evt) {
+  evt.preventDefault();
+  if (nameInput.value !== '') {
+    jobProfil.textContent = jobInput.value;
+  } else {
+    closePopup();
+  }
+}
+
+formElement.addEventListener('submit', addName);
+formElement.addEventListener('submit', addJob);
+popupSubmitButton.addEventListener('click', closePopup);
+

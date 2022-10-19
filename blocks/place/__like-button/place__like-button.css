@@ -1,7 +1,7 @@
 .place__like-button {
   width: 22px;
   height: 19px;
-  background-image: url(../../../images/like-button_status_disabled.svg);
+  background-image: url(../../../images/like-button_status_disabled.svg) center no-repeat;
   border: 0;
   padding: 0;
   margin: auto 5px;

@@ -6,6 +6,10 @@
   font-style: normal;
   font-weight: 500;
   color: #FFFFFF;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 680px;
 }
 
 @media screen and (max-width: 768px) {

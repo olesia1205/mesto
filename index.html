@@ -92,18 +92,16 @@
     </footer>
 
     <!--Попап редактирования профиля-->
-    <form class="popup">
-      <div class="popup__container">
+    <div class="popup">
+      <form class="popup__container" name="popup-container" id="popup-container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__name" type="text" placeholder="Жак-Ив Кусто" required>
-        <input class="popup__info" type="text" placeholder="Исследователь океана" required>
-        <button class="popup__submit-button" type="submit" name="submit-button" value="Сохранить">
-          <span class="popup__submit-button-content">Сохранить</span>
-        </button>
+        <input class="popup__name" type="text" name="name" placeholder="Жак-Ив Кусто" value="">
+        <input class="popup__info" type="text" name="job" placeholder="Исследователь океана" value="">
+        <button class="popup__submit-button popup__submit-button-content"
+          type="submit" name="submit-button" value="Сохранить">Сохранить</button>
         <button class="popup__close-button" type="button" name="close-button"></button>
-      </div>
-    </form>
-
+      </form>
+    </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>
