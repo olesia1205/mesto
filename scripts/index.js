@@ -3,55 +3,40 @@ const popupOpenButtonElement = document.querySelector('.profile__info-edit-butto
 const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close-button');
 
-const openPopup = function(event) {
+const formElement = document.querySelector('.popup__form');
+const nameInput = formElement.querySelector('.popup__input_info_name');
+const jobInput = formElement.querySelector('.popup__input_info_job');
+
+const profilElement = document.querySelector('.profile');
+const nameProfil = profilElement.querySelector('.profile__info-title');
+const jobProfil = profilElement.querySelector('.profile__info-subtitle');
+
+const openPopup = function() {
   popupElement.classList.add('popup_is-opened');
+  nameInput.value = nameProfil.textContent;
+  jobInput.value = jobProfil.textContent;
 }
 
 const closePopup = function() {
   popupElement.classList.remove('popup_is-opened');
 }
 
-const closePopupByClickOnOverlay = function(event) {
-  if (event.target !== event.currentTarget) {
-    return;
-  }
+function addInfo(evt) {
+  evt.preventDefault();
+  nameProfil.textContent = nameInput.value;
+  jobProfil.textContent = jobInput.value;
   closePopup();
 }
 
 popupOpenButtonElement.addEventListener('click', openPopup);
 popupCloseButtonElement.addEventListener('click', closePopup);
-popupElement.addEventListener('click', closePopupByClickOnOverlay);
+formElement.addEventListener('submit', addInfo);
 
-//Редактирование имени и информации о себе
+// const closePopupByClickOnOverlay = function(event) {
+//   if (event.target !== event.currentTarget) {
+//     return;
+//   }
+//   closePopup();
+// }
 
-let formElement = document.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__name');
-let jobInput = formElement.querySelector('.popup__info');
-const popupSubmitButton = formElement.querySelector('.popup__submit-button');
-
-const profilElement = document.querySelector('.profile');
-let nameProfil = profilElement.querySelector('.profile__info-title');
-let jobProfil = profilElement.querySelector('.profile__info-subtitle');
-
-function addName(evt) {
-  evt.preventDefault();
-  if (nameInput.value !== '') {
-    nameProfil.textContent = nameInput.value;
-  } else {
-    closePopup();
-  }
-}
-
-function addJob(evt) {
-  evt.preventDefault();
-  if (jobInput.value !== '') {
-    jobProfil.textContent = jobInput.value;
-  } else {
-    closePopup();
-  }
-}
-
-formElement.addEventListener('submit', addName);
-formElement.addEventListener('submit', addJob);
-popupSubmitButton.addEventListener('click', closePopup);
-
+// popupElement.addEventListener('click', closePopupByClickOnOverlay);
