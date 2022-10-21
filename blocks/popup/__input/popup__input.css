@@ -1,6 +1,6 @@
-.popup__name {
-  padding: 0 0 10px;
-  margin: 0 36px;
+.popup__input {
+  padding: 0 0 9px;
+  margin: 30px 36px 0;
   width: 358px;
   border: none;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
@@ -12,13 +12,13 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.popup__name:focus {
+.popup__input:focus {
   outline: none;
 }
 
 @media screen and (max-width: 630px) {
-  .popup__name {
-    margin: 0 22px;
+  .popup__input {
+    margin: 30px 22px 0;
     width: 238px;
   }
 }

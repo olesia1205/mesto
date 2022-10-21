@@ -26,63 +26,63 @@
           <div class="profile__info">
             <div class="profile__info-edit">
               <h1 class="profile__info-title">Жак-Ив Кусто</h1>
-              <button class="profile__info-edit-button" name="info-edit-button" type="button"></button>
+              <button class="profile__info-edit-button" name="info-edit-button" type="button" aria-label="Редактировать профиль"></button>
             </div>
             <p class="profile__info-subtitle">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button" name="add-button" type="button"></button>
+        <button class="profile__add-button" name="add-button" type="button" aria-label="Добавить"></button>
       </section>
 
       <!--секция с карточками-->
       <section class="places" aria-label="Карточки о местах">
-        <div class="place">
-          <img class="place__image" src="./images/karachaevsk.png" alt="Карачаевск">
+        <article class="place">
+          <img class="place__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
           <div class="place__info">
             <h2 class="place__title">Карачаевск</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="place">
-          <img class="place__image" src="./images/elbrus.png" alt="Гора Эльбрус">
+        <article class="place">
+          <img class="place__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
           <div class="place__info">
             <h2 class="place__title">Гора Эльбрус</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="place">
-          <img class="place__image" src="./images/dombay.png" alt="Домбай">
+        <article class="place">
+          <img class="place__image" src="./images/dombay.jpg" alt="Домбай">
           <div class="place__info">
             <h2 class="place__title">Домбай</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="place">
+        <article class="place">
           <img class="place__image" src="./images/dagestan.jpg" alt="Дагестан">
           <div class="place__info">
             <h2 class="place__title">Дагестан</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="place">
+        <article class="place">
           <img class="place__image" src="./images/osetia.jpg" alt="Осетия">
           <div class="place__info">
             <h2 class="place__title">Осетия</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="place">
+        <article class="place">
           <img class="place__image" src="./images/habarovsk.jpg" alt="Хабаровск">
           <div class="place__info">
             <h2 class="place__title">Хабаровск</h2>
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
-        </div>
+        </article>
       </section>
     </main>
 
@@ -93,14 +93,15 @@
 
     <!--Попап редактирования профиля-->
     <div class="popup">
-      <form class="popup__container" name="popup-container" id="popup-container">
+      <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__name" type="text" name="name" placeholder="Жак-Ив Кусто" value="">
-        <input class="popup__info" type="text" name="job" placeholder="Исследователь океана" value="">
-        <button class="popup__submit-button popup__submit-button-content"
-          type="submit" name="submit-button" value="Сохранить">Сохранить</button>
-        <button class="popup__close-button" type="button" name="close-button"></button>
-      </form>
+        <form class="popup__form" name="popup-form" id="popup-form">
+          <input class="popup__input popup__input_info_name" type="text" name="name" placeholder="Жак-Ив Кусто" value="">
+          <input class="popup__input popup__input_info_job" type="text" name="job" placeholder="Исследователь океана" value="">
+          <button class="popup__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
+          <button class="popup__close-button" type="button" name="close-button"></button>
+        </form>
+      </div>
     </div>
   </div>
   <script src="./scripts/index.js"></script>

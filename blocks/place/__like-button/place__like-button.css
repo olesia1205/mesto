@@ -5,7 +5,7 @@
   border: 0;
   padding: 0;
   margin: auto 5px;
-  background-color: #FFFFFF;
+  background-color: transparent;
   background-size: cover;
   align-self: center;
   transition: opacity 0.35s linear;
