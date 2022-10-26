@@ -103,6 +103,19 @@
         </form>
       </div>
     </div>
+
+    <!--Попап добавления и редактирования карточек-->
+    <div class="popup popup_type_card">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="popup-form" id="popup-form">
+          <input class="popup__input popup__input_info_place-name" type="text" name="place-name" placeholder="Название" value="">
+          <input class="popup__input popup__input_info_place-link" type="text" name="place-link" placeholder="Ссылка на картинку" value="">
+          <button class="popup__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
+          <button class="popup__close-button" type="button" name="close-button"></button>
+        </form>
+      </div>
+    </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>
