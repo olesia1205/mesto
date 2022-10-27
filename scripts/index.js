@@ -16,6 +16,7 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
 const cardsSection = document.querySelector('.places');
+const cardTemplate = cardsSection.querySelector('.place__template').content;
 
 const initialCards = [
   {
@@ -65,18 +66,14 @@ function addInfo(evt) {
 }
 
 // Добавление карточек с местами
-const addCard = function() {
-  const cardTemplate = document.querySelector('.place__template').content;
-  const cardElement = cardTemplate.querySelector('.place').cloneNode(true);
-
   initialCards.forEach(function (card) {
+    const cardElement = cardTemplate.cloneNode(true);
+
     cardElement.querySelector('.place__title').textContent = card.name;
     cardElement.querySelector('.place__image').src = card.link;
-  });
 
-  cardsSection.prepend(cardTemplate);
-}
-addCard();
+    cardsSection.prepend(cardElement);
+  });
 
 // Открытие, закрытие попапа редактирования карточек - функции
 const openPopupCard = function() {
