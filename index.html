@@ -36,14 +36,16 @@
 
       <!--секция с карточками-->
       <section class="places" aria-label="Карточки о местах">
-        <article class="place">
-          <img class="place__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
-          <div class="place__info">
-            <h2 class="place__title">Карачаевск</h2>
-            <button class="place__like-button" name="like-button" type="button"></button>
-          </div>
-        </article>
-
+        <template class="place__template">
+          <article class="place">
+            <img class="place__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
+            <div class="place__info">
+              <h2 class="place__title">Карачаевск</h2>
+              <button class="place__like-button" name="like-button" type="button"></button>
+            </div>
+          </article>
+        </template>
+<!--
         <article class="place">
           <img class="place__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
           <div class="place__info">
@@ -83,6 +85,7 @@
             <button class="place__like-button" name="like-button" type="button"></button>
           </div>
         </article>
+        -->
       </section>
     </main>
 
