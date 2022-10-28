@@ -15,6 +15,8 @@ const jobProfil = profilElement.querySelector('.profile__info-subtitle');
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
+
+// Отрисовка карточек с местами при помощи JS - переменные
 const cardsSection = document.querySelector('.places');
 const cardTemplate = cardsSection.querySelector('.place__template').content;
 
@@ -46,7 +48,6 @@ const initialCards = [
   }
 ]
 
-
 // Открытие, закрытие попапа редактирования профиля пользователя - функции
 const openPopup = function() {
   popupElement.classList.add('popup_is-opened');
@@ -65,7 +66,7 @@ function addInfo(evt) {
   closePopup();
 }
 
-// Добавление карточек с местами
+// Отрисовка карточек с местами при помощи JS
   initialCards.forEach(function (card) {
     const cardElement = cardTemplate.cloneNode(true);
 
@@ -76,7 +77,7 @@ function addInfo(evt) {
   });
 
 // Открытие, закрытие попапа редактирования карточек - функции
-const openPopupCard = function() {
+function openPopupCard() {
   popupCardElement.classList.add('popup_is-opened');
 }
 
