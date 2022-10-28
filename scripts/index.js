@@ -11,40 +11,49 @@ const profilElement = document.querySelector('.profile');
 const nameProfil = profilElement.querySelector('.profile__info-title');
 const jobProfil = profilElement.querySelector('.profile__info-subtitle');
 
-// Открытие, закрытие попапа редактирования карточек - переменные
+// Открытие, закрытие попапа карточек - переменные
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
+const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
 
-// Отрисовка карточек с местами при помощи JS - переменные
+// Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
 const cardsSection = document.querySelector('.places');
 const cardTemplate = cardsSection.querySelector('.place__template').content;
+const cardTitleInput = formCardElement.querySelector('.popup__input_info_place-name');
+const cardLinkInput = formCardElement.querySelector('.popup__input_info_place-link');
 
 const initialCards = [
   {
     name: 'Хабаровск',
-    link: '../images/habarovsk.jpg'
+    link: '../images/habarovsk.jpg',
+    alt: 'Хабаровск'
   },
   {
     name: 'Осетия',
-    link: '../images/osetia.jpg'
+    link: '../images/osetia.jpg',
+    alt: 'Осетия'
   },
   {
     name: 'Дагестан',
-    link: '../images/dagestan.jpg'
+    link: '../images/dagestan.jpg',
+    alt: 'Дагестан'
 
   },
   {
     name: 'Домбай',
-    link: '../images/dombay.jpg'
+    link: '../images/dombay.jpg',
+    alt: 'Домбай'
   },
   {
     name: 'Гора Эльбрус',
-    link: '../images/elbrus.jpg'
+    link: '../images/elbrus.jpg',
+    alt: 'Эльбрус'
   },
   {
     name: 'Карачаевск',
-    link: '../images/karachaevsk.jpg'
+    link: '../images/karachaevsk.jpg',
+    alt: 'Карачаевск'
   }
 ]
 
@@ -66,17 +75,32 @@ function addInfo(evt) {
   closePopup();
 }
 
-// Отрисовка карточек с местами при помощи JS
-  initialCards.forEach(function (card) {
-    const cardElement = cardTemplate.cloneNode(true);
+// Отрисовка карточек с местами при помощи JS, добавление новых карточек
+const renderCard = function(data) {
+  const cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector('.place__title').textContent = data.name;
+  cardElement.querySelector('.place__image').src = data.link;
+  cardElement.querySelector('.place__image').alt = data.alt;
+  cardsSection.prepend(cardElement);
+}
 
-    cardElement.querySelector('.place__title').textContent = card.name;
-    cardElement.querySelector('.place__image').src = card.link;
+initialCards.forEach(renderCard);
 
-    cardsSection.prepend(cardElement);
-  });
+const createCard = function() {
+  const cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector('.place__title').textContent = cardTitleInput.value;
+  cardElement.querySelector('.place__image').src = cardLinkInput.value;
+  cardElement.querySelector('.place__image').alt = cardTitleInput.value;
+  cardsSection.prepend(cardElement);
+}
 
-// Открытие, закрытие попапа редактирования карточек - функции
+const CardSubmitHandler = function(evt) {
+  evt.preventDefault();
+  createCard();
+  closePopupCard();
+}
+
+// Открытие, закрытие попапа карточек - функции
 function openPopupCard() {
   popupCardElement.classList.add('popup_is-opened');
 }
@@ -92,6 +116,10 @@ formElement.addEventListener('submit', addInfo);
 
 popupCardOpenButtonElement.addEventListener('click', openPopupCard);
 popupCardCloseButtonElement.addEventListener('click', closePopupCard);
+
+formCardElement.addEventListener('submit', CardSubmitHandler);
+
+
 // const closePopupByClickOnOverlay = function(event) {
 //   if (event.target !== event.currentTarget) {
 //     return;
