@@ -103,6 +103,8 @@ const CardSubmitHandler = function(evt) {
 // Открытие, закрытие попапа карточек - функции
 function openPopupCard() {
   popupCardElement.classList.add('popup_is-opened');
+  cardTitleInput.value = '';
+  cardLinkInput.value = '';
 }
 
 const closePopupCard = function() {
@@ -114,9 +116,9 @@ popupOpenButtonElement.addEventListener('click', openPopup);
 popupCloseButtonElement.addEventListener('click', closePopup);
 formElement.addEventListener('submit', addInfo);
 
+// Отрисовка карточек с местами при помощи JS, добавление новых карточек - слушатели событий
 popupCardOpenButtonElement.addEventListener('click', openPopupCard);
 popupCardCloseButtonElement.addEventListener('click', closePopupCard);
-
 formCardElement.addEventListener('submit', CardSubmitHandler);
 
 
