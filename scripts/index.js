@@ -83,8 +83,12 @@ const renderCard = function(data) {
   cardElement.querySelector('.place__image').src = data.link;
   cardElement.querySelector('.place__image').alt = data.alt;
 
-  cardElement.querySelector('.place__like-button').addEventListener('click', function (evt) {
+  cardElement.querySelector('.place__like-button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('place__like-button_status_active');
+  });
+
+  cardElement.querySelector('.place__delete-button').addEventListener('click', function(evt) {
+    evt.target.closest('.place').remove();
   });
 
   cardsSection.prepend(cardElement);
@@ -100,6 +104,10 @@ const createCard = function() {
 
   cardElement.querySelector('.place__like-button').addEventListener('click', function (evt) {
     evt.target.classList.toggle('place__like-button_status_active');
+  });
+
+  cardElement.querySelector('.place__delete-button').addEventListener('click', function(evt) {
+    evt.target.closest('.place').remove();
   });
 
   cardsSection.prepend(cardElement);
