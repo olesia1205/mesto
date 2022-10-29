@@ -16,13 +16,13 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
 const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
+const popupImageElement = document.querySelector('.popup_type_image');
 
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
 const cardsSection = document.querySelector('.places');
 const cardTemplate = cardsSection.querySelector('.place__template').content;
 const cardTitleInput = formCardElement.querySelector('.popup__input_info_place-name');
 const cardLinkInput = formCardElement.querySelector('.popup__input_info_place-link');
-// const cardLikeButtonElement = cardTemplate.querySelector('.place__like-button');
 
 const initialCards = [
   {
@@ -91,6 +91,13 @@ const renderCard = function(data) {
     evt.target.closest('.place').remove();
   });
 
+  cardElement.querySelector('.place__image').addEventListener('click', function(evt) {
+    popupImageElement.src =
+    popupImageElement.alt =
+    evt.target.classList.toggle('popup_is-opened');
+  });
+
+
   cardsSection.prepend(cardElement);
 }
 
@@ -128,11 +135,6 @@ function openPopupCard() {
 
 const closePopupCard = function() {
   popupCardElement.classList.remove('popup_is-opened');
-}
-
-// Лайки для карточек
-function renderLike() {
-
 }
 
 // Открытие, закрытие попапа редактирования профиля пользователя - слушатели событий
