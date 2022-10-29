@@ -22,6 +22,7 @@ const cardsSection = document.querySelector('.places');
 const cardTemplate = cardsSection.querySelector('.place__template').content;
 const cardTitleInput = formCardElement.querySelector('.popup__input_info_place-name');
 const cardLinkInput = formCardElement.querySelector('.popup__input_info_place-link');
+// const cardLikeButtonElement = cardTemplate.querySelector('.place__like-button');
 
 const initialCards = [
   {
@@ -81,6 +82,11 @@ const renderCard = function(data) {
   cardElement.querySelector('.place__title').textContent = data.name;
   cardElement.querySelector('.place__image').src = data.link;
   cardElement.querySelector('.place__image').alt = data.alt;
+
+  cardElement.querySelector('.place__like-button').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('place__like-button_status_active');
+  });
+
   cardsSection.prepend(cardElement);
 }
 
@@ -91,6 +97,11 @@ const createCard = function() {
   cardElement.querySelector('.place__title').textContent = cardTitleInput.value;
   cardElement.querySelector('.place__image').src = cardLinkInput.value;
   cardElement.querySelector('.place__image').alt = cardTitleInput.value;
+
+  cardElement.querySelector('.place__like-button').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('place__like-button_status_active');
+  });
+
   cardsSection.prepend(cardElement);
 }
 
@@ -109,6 +120,11 @@ function openPopupCard() {
 
 const closePopupCard = function() {
   popupCardElement.classList.remove('popup_is-opened');
+}
+
+// Лайки для карточек
+function renderLike() {
+
 }
 
 // Открытие, закрытие попапа редактирования профиля пользователя - слушатели событий
