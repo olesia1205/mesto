@@ -1,4 +1,4 @@
-// Открытие, закрытие попапа редактирования профиля пользователя - переменные
+// Открытие, закрытие попапа редактирования профиля пользователя
 const popupOpenButtonElement = document.querySelector('.profile__info-edit-button');
 const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close-button');
@@ -11,11 +11,13 @@ const profilElement = document.querySelector('.profile');
 const nameProfil = profilElement.querySelector('.profile__info-title');
 const jobProfil = profilElement.querySelector('.profile__info-subtitle');
 
-// Открытие, закрытие попапа карточек - переменные
+// Открытие, закрытие попапа карточек
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
 const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
+
+// Открытие попапа с картинками
 const popupImageElement = document.querySelector('.popup_type_image');
 
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
@@ -39,7 +41,6 @@ const initialCards = [
     name: 'Дагестан',
     link: '../images/dagestan.jpg',
     alt: 'Дагестан'
-
   },
   {
     name: 'Домбай',
@@ -65,7 +66,7 @@ const openPopup = function() {
   jobInput.value = jobProfil.textContent;
 }
 
-const closePopup = function() {
+const closePopup = function(popupElement) {
   popupElement.classList.remove('popup_is-opened');
 }
 
@@ -73,7 +74,7 @@ function addInfo(evt) {
   evt.preventDefault();
   nameProfil.textContent = nameInput.value;
   jobProfil.textContent = jobInput.value;
-  closePopup();
+  closePopup(popupElement);
 }
 
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек
@@ -123,7 +124,7 @@ const createCard = function() {
 const CardSubmitHandler = function(evt) {
   evt.preventDefault();
   createCard();
-  closePopupCard();
+  closePopup(popupCardElement);
 }
 
 // Открытие, закрытие попапа карточек - функции
@@ -133,18 +134,18 @@ function openPopupCard() {
   cardLinkInput.value = '';
 }
 
-const closePopupCard = function() {
-  popupCardElement.classList.remove('popup_is-opened');
-}
-
-// Открытие, закрытие попапа редактирования профиля пользователя - слушатели событий
+// Открытие, закрытие попапа редактирования профиля пользователя
 popupOpenButtonElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
+popupCloseButtonElement.addEventListener('click', function() {
+  closePopup(popupElement);
+});
 formElement.addEventListener('submit', addInfo);
 
-// Отрисовка карточек с местами при помощи JS, добавление новых карточек - слушатели событий
+// Отрисовка карточек с местами при помощи JS, добавление новых карточек
 popupCardOpenButtonElement.addEventListener('click', openPopupCard);
-popupCardCloseButtonElement.addEventListener('click', closePopupCard);
+popupCardCloseButtonElement.addEventListener('click', function() {
+  closePopup(popupCardElement);
+});
 formCardElement.addEventListener('submit', CardSubmitHandler);
 
 
