@@ -60,7 +60,7 @@ const initialCards = [
 ]
 
 // Открытие, закрытие попапа редактирования профиля пользователя - функции
-const openPopup = function() {
+const openPopup = function(popupElement) {
   popupElement.classList.add('popup_is-opened');
   nameInput.value = nameProfil.textContent;
   jobInput.value = jobProfil.textContent;
@@ -127,27 +127,31 @@ const CardSubmitHandler = function(evt) {
   closePopup(popupCardElement);
 }
 
-// Открытие, закрытие попапа карточек - функции
-function openPopupCard() {
-  popupCardElement.classList.add('popup_is-opened');
-  cardTitleInput.value = '';
-  cardLinkInput.value = '';
-}
-
 // Открытие, закрытие попапа редактирования профиля пользователя
-popupOpenButtonElement.addEventListener('click', openPopup);
+popupOpenButtonElement.addEventListener('click', function() {
+  openPopup(popupElement);
+});
+
 popupCloseButtonElement.addEventListener('click', function() {
   closePopup(popupElement);
 });
+
 formElement.addEventListener('submit', addInfo);
 
-// Отрисовка карточек с местами при помощи JS, добавление новых карточек
-popupCardOpenButtonElement.addEventListener('click', openPopupCard);
+// Открытие, закрытие попапа карточек, добавление новых карточек
+popupCardOpenButtonElement.addEventListener('click', function() {
+  openPopup(popupCardElement);
+  cardTitleInput.value = '';
+  cardLinkInput.value = '';
+});
+
 popupCardCloseButtonElement.addEventListener('click', function() {
   closePopup(popupCardElement);
 });
+
 formCardElement.addEventListener('submit', CardSubmitHandler);
 
+// Закрытие попапов по Overlay
 
 // const closePopupByClickOnOverlay = function(event) {
 //   if (event.target !== event.currentTarget) {
