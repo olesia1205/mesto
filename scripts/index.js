@@ -17,8 +17,11 @@ const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close-button');
 const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
 
-// Открытие попапа с картинками
+// Открытие, закрытие попапа с картинками
 const popupImageElement = document.querySelector('.popup_type_image');
+const popupImage = popupImageElement.querySelector('.popup__image');
+const popupImageSubtitle = popupImageElement.querySelector('.popup__image-subtitle');
+const popupImageCloseButtonElement = popupImageElement.querySelector('.popup__close-button');
 
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
 const cardsSection = document.querySelector('.places');
@@ -81,7 +84,8 @@ function addInfo(evt) {
 const renderCard = function(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardElementImage = cardElement.querySelector('.place__image');
-  cardElement.querySelector('.place__title').textContent = data.name;
+  const cardElementImageText = cardElement.querySelector('.place__title');
+  cardElementImageText.textContent = data.name;
   cardElementImage.src = data.link;
   cardElementImage.alt = data.alt;
 
@@ -91,6 +95,12 @@ const renderCard = function(data) {
 
   cardElement.querySelector('.place__delete-button').addEventListener('click', function(evt) {
     evt.target.closest('.place').remove();
+  });
+
+  cardElementImage.addEventListener('click', function(data) {
+    popupImage.src = cardElementImage.src;
+    popupImageSubtitle.textContent = cardElementImageText.textContent;
+    openPopup(popupImageElement);
   });
 
   return cardElement;
@@ -137,6 +147,11 @@ popupCardCloseButtonElement.addEventListener('click', function() {
 });
 
 formCardElement.addEventListener('submit', CardSubmitHandler);
+
+//Закрытие попапа картинок
+popupImageCloseButtonElement.addEventListener('click', function() {
+  closePopup(popupImageElement);
+});
 
 // Закрытие попапов по Overlay
 
