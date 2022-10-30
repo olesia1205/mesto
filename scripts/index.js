@@ -80,9 +80,10 @@ function addInfo(evt) {
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек
 const renderCard = function(data) {
   const cardElement = cardTemplate.cloneNode(true);
+  const cardElementImage = cardElement.querySelector('.place__image');
   cardElement.querySelector('.place__title').textContent = data.name;
-  cardElement.querySelector('.place__image').src = data.link;
-  cardElement.querySelector('.place__image').alt = data.alt;
+  cardElementImage.src = data.link;
+  cardElementImage.alt = data.alt;
 
   cardElement.querySelector('.place__like-button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('place__like-button_status_active');
@@ -92,38 +93,24 @@ const renderCard = function(data) {
     evt.target.closest('.place').remove();
   });
 
-  cardElement.querySelector('.place__image').addEventListener('click', function(evt) {
-    popupImageElement.src =
-    popupImageElement.alt =
-    evt.target.classList.toggle('popup_is-opened');
-  });
+  return cardElement;
+}
 
-
+const createCard = function(data) {
+  const cardElement = renderCard(data);
   cardsSection.prepend(cardElement);
 }
 
-initialCards.forEach(renderCard);
-
-const createCard = function() {
-  const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector('.place__title').textContent = cardTitleInput.value;
-  cardElement.querySelector('.place__image').src = cardLinkInput.value;
-  cardElement.querySelector('.place__image').alt = cardTitleInput.value;
-
-  cardElement.querySelector('.place__like-button').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('place__like-button_status_active');
-  });
-
-  cardElement.querySelector('.place__delete-button').addEventListener('click', function(evt) {
-    evt.target.closest('.place').remove();
-  });
-
-  cardsSection.prepend(cardElement);
-}
+initialCards.forEach(createCard);
 
 const CardSubmitHandler = function(evt) {
   evt.preventDefault();
-  createCard();
+  const data = {
+    name: cardTitleInput.value,
+    link: cardLinkInput.value,
+    alt: cardTitleInput.value
+  };
+  createCard(data);
   closePopup(popupCardElement);
 }
 
@@ -161,3 +148,4 @@ formCardElement.addEventListener('submit', CardSubmitHandler);
 // }
 
 // popupElement.addEventListener('click', closePopupByClickOnOverlay);
+
