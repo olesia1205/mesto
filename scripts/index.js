@@ -125,7 +125,7 @@ popupCloseButtonElement.addEventListener('click', function() {
 
 formElement.addEventListener('submit', addInfo);
 
-// Открытие, закрытие попапа карточек, добавление новых карточек
+// Открытие, закрытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
   cardTitleInput.value = '';
