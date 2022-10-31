@@ -32,32 +32,32 @@ const cardLinkInput = formCardElement.querySelector('.popup__input_info_place-li
 const initialCards = [
   {
     name: 'Хабаровск',
-    link: '../images/habarovsk.jpg',
+    link: './images/habarovsk.jpg',
     alt: 'Хабаровск'
   },
   {
     name: 'Осетия',
-    link: '../images/osetia.jpg',
+    link: './images/osetia.jpg',
     alt: 'Осетия'
   },
   {
     name: 'Дагестан',
-    link: '../images/dagestan.jpg',
+    link: './images/dagestan.jpg',
     alt: 'Дагестан'
   },
   {
     name: 'Холмогорский район',
-    link: '../images/kholmogorsky-rayon.jpg',
+    link: './images/kholmogorsky-rayon.jpg',
     alt: 'Домбай'
   },
   {
     name: 'Иваново',
-    link: '../images/ivanovo.jpg',
+    link: './images/ivanovo.jpg',
     alt: 'Иваново'
   },
   {
     name: 'Карачаевск',
-    link: '../images/karachaevsk.jpg',
+    link: './images/karachaevsk.jpg',
     alt: 'Карачаевск'
   }
 ]
