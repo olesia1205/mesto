@@ -1,7 +1,5 @@
 .popup__container_type_image {
   margin: auto;
-  width: 75vw;
-  height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;

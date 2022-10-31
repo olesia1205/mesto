@@ -46,14 +46,14 @@ const initialCards = [
     alt: 'Дагестан'
   },
   {
-    name: 'Домбай',
-    link: '../images/dombay.jpg',
+    name: 'Холмогорский район',
+    link: '../images/kholmogorsky-rayon.jpg',
     alt: 'Домбай'
   },
   {
-    name: 'Гора Эльбрус',
-    link: '../images/elbrus.jpg',
-    alt: 'Эльбрус'
+    name: 'Иваново',
+    link: '../images/ivanovo.jpg',
+    alt: 'Иваново'
   },
   {
     name: 'Карачаевск',
