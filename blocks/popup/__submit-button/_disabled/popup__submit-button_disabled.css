@@ -1,0 +1,28 @@
+.popup__submit-button_disabled {
+  margin: 48px 36px 37px;
+  padding: 0;
+  border: none;
+  width: 358px;
+  height: 50px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 1);
+  cursor: pointer;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  opacity: 0.2;
+}
+
+@media screen and (max-width: 630px) {
+  .popup__submit-button_disabled {
+    margin: 45px 22px 25px;
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
