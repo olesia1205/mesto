@@ -16,8 +16,18 @@ function enableValidation({formSelector, inputSelector, submitButtonSelector, in
     const inputs = form.querySelectorAll(inputSelector);
     inputs.forEach(input => {
       input.addEventListener('input', evt => {
-        console.log(input.validity);
-        console.log(input.validationMessage);
+        if (input.validity.valid) {
+          const inputName = input.getAttribute('name');
+          const errorPlace = document.getElementById(`${inputName}-error`);
+          errorPlace.textContent = '';
+          errorPlace.classList.remove(errorClass);
+        } else {
+          const inputName = input.getAttribute('name');
+          const errorPlace = document.getElementById(`${inputName}-error`);
+          errorPlace.textContent = input.validationMessage;
+          errorPlace.classList.add(errorClass);
+        }
+
       });
     });
   });

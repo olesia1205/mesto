@@ -59,9 +59,10 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="popup-form" id="popup-form" novalidate>
-          <input class="popup__input popup__input_info_name" type="text" name="name" placeholder="Ваше имя" value="" required minlength="20" maxlength="40">
-          <span class="popup__input-error"></span>
+          <input class="popup__input popup__input_info_name" type="text" name="name" placeholder="Ваше имя" value="" required minlength="2" maxlength="40">
+          <span class="popup__input-error" id="name-error"></span>
           <input class="popup__input popup__input_info_job" type="text" name="job" placeholder="Ваш род деятельности" value="" required minlength="2" maxlength="200">
+          <span class="popup__input-error" id="job-error"></span>
           <button class="popup__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
           <button class="popup__close-button" type="button" name="close-button"></button>
         </form>
@@ -74,7 +75,9 @@
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__form popup__form_type_card" name="popup-form-card" id="popup-form-card" novalidate>
           <input class="popup__input popup__input_info_place-name" type="text" name="place-name" placeholder="Название" value="" required minlength="2" maxlength="30">
-          <input class="popup__input popup__input_info_place-link" type="text" name="place-link" placeholder="Ссылка на картинку" value="" required>
+          <span class="popup__input-error" id="place-name-error"></span>
+          <input class="popup__input popup__input_info_place-link" type="url" name="place-link" placeholder="Ссылка на картинку" value="" required>
+          <span class="popup__input-error" id="place-link-error"></span>
           <button class="popup__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
           <button class="popup__close-button" type="button" name="close-button"></button>
         </form>
