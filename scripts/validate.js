@@ -13,7 +13,7 @@ function enableValidation({formSelector, inputSelector, submitButtonSelector, in
     form.addEventListener('submit', evt => evt.preventDefault());
 
     //**
-    const inputs = form.querySelectorAll(inputSelector);
+    const inputs = Array.from(form.querySelectorAll(inputSelector));
     inputs.forEach(input => {
       input.addEventListener('input', evt => {
         if (input.validity.valid) {
@@ -34,3 +34,14 @@ function enableValidation({formSelector, inputSelector, submitButtonSelector, in
 };
 
 enableValidation(obj);
+
+// состояние кнопки Submit
+// function setSubmitButtonState(isFormValid) {
+//   if (isFormValid) {
+//     addButton.removeAttribute('disabled');
+//     addButton.classList.remove('popup__submit-button_disabled');
+//   } else {
+//     addButton.setAttribute('disabled', true);
+//     addButton.classList.add('popup__submit-button_disabled');
+//   }
+// }
