@@ -148,17 +148,17 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 formCardElement.addEventListener('submit', handleCardFormSubmit);
 
 // Закрытие попапов по Overlay
-// const popups = document.querySelectorAll('.popup');
-// popups.forEach((popup) => {
-//   popup.addEventListener('mousedown', (evt) => {
-//     if (evt.target.classList.contains('popup_is-opened')) {
-//       closePopup(popup);
-//     }
-//     if (evt.target.classList.contains('popup__close-button')) {
-//       closePopup(popup)
-//     }
-//   })
-// });
+const popups = document.querySelectorAll('.popup');
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_is-opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+  })
+});
 
 
 
