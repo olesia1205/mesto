@@ -160,5 +160,12 @@ popups.forEach((popup) => {
   })
 });
 
-
+// Закрытие попапа по нажатию на кнопку Esc
+popups.forEach((popup) => {
+  popup.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  })
+});
 

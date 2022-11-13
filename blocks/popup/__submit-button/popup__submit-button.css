@@ -14,6 +14,7 @@
   font-style: normal;
   font-weight: 400;
   color: #FFFFFF;
+  user-select: none;
 }
 
 .popup__submit-button:hover {
