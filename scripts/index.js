@@ -16,6 +16,8 @@ const jobProfil = profilElement.querySelector('.profile__info-subtitle');
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
 const popupCardElement = document.querySelector('.popup_type_card');
 const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
+const popupInputCardElement = formCardElement.querySelector('.popup__input');
+const popupCardSubmitButtonElement = popupCardElement.querySelector('.popup__submit-button');
 
 // Открытие, закрытие попапа с картинками
 const popupImageElement = document.querySelector('.popup_type_image');
@@ -139,11 +141,17 @@ popupProfilOpenButtonElement.addEventListener('click', function() {
 
 formElement.addEventListener('submit', addInfo);
 
+function setSubmitButtonState(popupCardSubmitButtonElement) {
+  popupCardSubmitButtonElement.setAttribute("disabled", true);
+  popupCardSubmitButtonElement.classList.add('popup__submit-button_disabled');
+};
+
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
   cardTitleInput.value = '';
   cardLinkInput.value = '';
+  setSubmitButtonState(popupCardSubmitButtonElement);
 });
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);
