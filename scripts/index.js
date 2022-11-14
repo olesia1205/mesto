@@ -1,7 +1,8 @@
 // Открытие, закрытие попапа редактирования профиля пользователя
+const popups = document.querySelectorAll('.popup');
 const popupProfilOpenButtonElement = document.querySelector('.profile__info-edit-button');
 const popupProfilElement = document.querySelector('.popup_type_profil');
-const popupCloseButtons = document.querySelectorAll('.popup__close-button');
+// const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
 const formElement = document.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_info_name');
@@ -69,12 +70,12 @@ const closePopup = function(popupProfilElement) {
   popupProfilElement.classList.remove('popup_is-opened');
 }
 
-popupCloseButtons.forEach((popupCloseButtons) => {
-  const popupProfilElement = popupCloseButtons.closest('.popup');
-  popupCloseButtons.addEventListener('click', () => {
-  closePopup(popupProfilElement);
-  });
-});
+// popupCloseButtons.forEach((popupCloseButtons) => {
+//   const popupProfilElement = popupCloseButtons.closest('.popup');
+//   popupCloseButtons.addEventListener('click', () => {
+//   closePopup(popupProfilElement);
+//   });
+// });
 
 // Редактирование профиля пользователя
 function addInfo(evt) {
@@ -147,25 +148,23 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);
 
-// Закрытие попапов по Overlay
-const popups = document.querySelectorAll('.popup');
+// Закрытие попапов по Overlay и кнопкам закрытия попапов
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_is-opened')) {
       closePopup(popup);
     }
-    if (evt.target.classList.contains('popup__close-button')) {
+    else if (evt.target.classList.contains('popup__close-button')) {
       closePopup(popup)
     }
   })
-});
 
-// Закрытие попапа по нажатию на кнопку Esc
-popups.forEach((popup) => {
-  popup.addEventListener('keydown', (evt) => {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       closePopup(popup);
     }
-  })
+  });
 });
+
+
 
