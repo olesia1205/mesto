@@ -66,18 +66,13 @@ const initialCards = [
 // Открытие и закрытие попапов
 const openPopup = function(popupProfilElement) {
   popupProfilElement.classList.add('popup_is-opened');
+  document.addEventListener('keydown', closePopupByEscape);
 }
 
 const closePopup = function(popupProfilElement) {
   popupProfilElement.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', closePopupByEscape);
 }
-
-// popupCloseButtons.forEach((popupCloseButtons) => {
-//   const popupProfilElement = popupCloseButtons.closest('.popup');
-//   popupCloseButtons.addEventListener('click', () => {
-//   closePopup(popupProfilElement);
-//   });
-// });
 
 // Редактирование профиля пользователя
 function addInfo(evt) {
@@ -156,7 +151,7 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);
 
-// Закрытие попапов по Overlay и кнопкам закрытия попапов
+// Закрытие попапов по Overlay и кнопкам закрытия, крестикам
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_is-opened')) {
@@ -166,13 +161,19 @@ popups.forEach((popup) => {
       closePopup(popup)
     }
   })
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
 });
 
+// Функция закрытия попапов по кнопке Escape
+function closePopupByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup);
+  }
+}
 
-
+// popupCloseButtons.forEach((popupCloseButtons) => {
+//   const popupProfilElement = popupCloseButtons.closest('.popup');
+//   popupCloseButtons.addEventListener('click', () => {
+//   closePopup(popupProfilElement);
+//   });
+// });
