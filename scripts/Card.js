@@ -1,7 +1,6 @@
-import {cardsSection, initialCards, popupImage, popupImageSubtitle, popupImageElement} from './constants.js'
-import { openPopup } from './utils.js';
+import {cardsSection, popupImage, popupImageSubtitle, popupImageElement} from './constants.js'
 
-export class Card {
+export default class Card {
   constructor(data, templateSelector, openPopup) {
     this._name = data.name;
     this._link = data.link;
@@ -10,9 +9,13 @@ export class Card {
     this.openPopup = openPopup;
   }
 
-  _renderCard() {
-    this._cardTemplate = document.querySelector(this._templateSelector).content;
-    this._cardElement = this._cardTemplate.cloneNode(true).children[0];
+  _getTemplate() {
+    const cardElement = document.querySelector(this._templateSelector).content.cloneNode(true).children[0];
+    return cardElement;
+  }
+
+  renderCard() {
+    this._cardElement = this._getTemplate();
     this._cardElement.querySelector('.place__title').textContent = this._name;
     this._cardElement.querySelector('.place__image').src = this._link;
     this._cardElement.querySelector('.place__image').alt = this._alt;
@@ -36,9 +39,3 @@ export class Card {
   }
 
 }
-
-initialCards.forEach((item) => {
-  const card = new Card(item, '.place__template', openPopup);
-  const cardElement = card._renderCard(item);
-  cardsSection.prepend(cardElement);
-})
