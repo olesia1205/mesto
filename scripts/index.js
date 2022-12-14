@@ -24,40 +24,6 @@ function addInfo(evt) {
   closePopup(popupProfilElement);
 }
 
-// // Отрисовка карточек с местами при помощи JS, добавление новых карточек
-// const renderCard = function(data) {
-//   const cardElement = cardTemplate.cloneNode(true);
-//   const cardElementImage = cardElement.querySelector('.place__image');
-//   const cardElementImageText = cardElement.querySelector('.place__title');
-//   cardElementImageText.textContent = data.name;
-//   cardElementImage.src = data.link;
-//   cardElementImage.alt = data.alt;
-
-//   cardElement.querySelector('.place__like-button').addEventListener('click', function(evt) {
-//     evt.target.classList.toggle('place__like-button_status_active');
-//   });
-
-//   cardElement.querySelector('.place__delete-button').addEventListener('click', function(evt) {
-//     evt.target.closest('.place').remove();
-//   });
-
-//   cardElementImage.addEventListener('click', function(data) {
-//     popupImage.src = cardElementImage.src;
-//     popupImageSubtitle.textContent = cardElementImageText.textContent;
-//     popupImage.alt = cardElementImageText.textContent;
-//     openPopup(popupImageElement);
-//   });
-
-//   return cardElement;
-// }
-
-// const createCard = function(data) {
-//   const cardElement = renderCard(data);
-//   cardsSection.prepend(cardElement);
-// }
-
-// initialCards.forEach(createCard);
-
 const handleCardFormSubmit = function(evt) {
   evt.preventDefault();
   const data = {
@@ -113,16 +79,23 @@ function closePopupByEscape(evt) {
   }
 }
 
+// Отрисовываем изначальные карточки на странице
 initialCards.forEach((item) => {
   const card = new Card(item, '.place__template', openPopup);
   const cardElement = card.renderCard(item);
   cardsSection.prepend(cardElement);
 })
 
+// Отрисовываем новые карточки при сабмите данных из формы
 const createCard = (data) => {
   const card = new Card(data, '.place__template', openPopup);
   const cardElement = card.renderCard(data);
   cardsSection.prepend(card.renderCard());
 }
 
-// const formValidator = new FormValidator(obj, );
+// Добавляем валидацию формы редактирования профиля и формы добавления новых карточек
+const formProfilValidator = new FormValidator(obj, formElement);
+formProfilValidator.enableValidation();
+
+const formCardValidator = new FormValidator(obj, formCardElement);
+formCardValidator.enableValidation();

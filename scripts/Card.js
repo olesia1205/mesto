@@ -1,4 +1,4 @@
-import {cardsSection, popupImage, popupImageSubtitle, popupImageElement} from './constants.js'
+import {popupImage, popupImageSubtitle, popupImageElement} from './constants.js'
 
 export default class Card {
   constructor(data, templateSelector, openPopup) {
