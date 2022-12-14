@@ -44,17 +44,17 @@ popupProfilOpenButtonElement.addEventListener('click', function() {
 
 formElement.addEventListener('submit', addInfo);
 
-// function setSubmitButtonState(popupCardSubmitButtonElement) {
-//   popupCardSubmitButtonElement.setAttribute("disabled", true);
-//   popupCardSubmitButtonElement.classList.add('popup__submit-button_disabled');
-// };
+function setSubmitButtonState(popupCardSubmitButtonElement) {
+  popupCardSubmitButtonElement.setAttribute("disabled", true);
+  popupCardSubmitButtonElement.classList.add('popup__submit-button_disabled');
+};
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
   cardTitleInput.value = '';
   cardLinkInput.value = '';
-  // setSubmitButtonState(popupCardSubmitButtonElement);
+  setSubmitButtonState(popupCardSubmitButtonElement);
 });
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);

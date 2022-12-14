@@ -10,18 +10,15 @@ export default class FormValidator {
 
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    // this._formList = Array.from(this._formElement.querySelectorAll(this._formSelector));
   }
 
   _showInputError = (inputElement, errorMessage) => {
-    // const inputName = inputElement.getAttribute('name');
     const errorElement = document.getElementById(`${inputElement.getAttribute('name')}-error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   };
 
   _hideInputError = (inputElement) => {
-    // const inputName = inputElement.getAttribute('name');
     const errorElement = document.getElementById(`${inputElement.getAttribute('name')}-error`);
     errorElement.textContent = '';
     errorElement.classList.remove(this._errorClass);
