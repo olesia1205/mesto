@@ -1,4 +1,4 @@
-import {popups, popupProfilOpenButtonElement, popupProfilElement, formElement, nameInput, jobInput,
+import {popups, popupProfilOpenButtonElement, popupProfilElement, formProfilElement, nameInput, jobInput,
   nameProfil, jobProfil, popupCardOpenButtonElement, popupCardElement, formCardElement,
   popupCardSubmitButtonElement, cardsSection, cardTitleInput, cardLinkInput, initialCards, obj} from './constants.js'
 
@@ -31,7 +31,7 @@ const handleCardFormSubmit = function(evt) {
     link: cardLinkInput.value,
     alt: cardTitleInput.value
   };
-  createCard(data);
+  prependCard(data);
   closePopup(popupCardElement);
 }
 
@@ -40,21 +40,17 @@ popupProfilOpenButtonElement.addEventListener('click', function() {
   nameInput.value = nameProfil.textContent;
   jobInput.value = jobProfil.textContent;
   openPopup(popupProfilElement);
+  formProfilValidator.resetValidation();
 });
 
-formElement.addEventListener('submit', addInfo);
-
-function setSubmitButtonState(popupCardSubmitButtonElement) {
-  popupCardSubmitButtonElement.setAttribute("disabled", true);
-  popupCardSubmitButtonElement.classList.add('popup__submit-button_disabled');
-};
+formProfilElement.addEventListener('submit', addInfo);
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
   cardTitleInput.value = '';
   cardLinkInput.value = '';
-  setSubmitButtonState(popupCardSubmitButtonElement);
+  formCardValidator.resetValidation();
 });
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);
@@ -79,22 +75,38 @@ function closePopupByEscape(evt) {
   }
 }
 
-// Отрисовываем изначальные карточки на странице
-initialCards.forEach((item) => {
+function createCard(item) {
   const card = new Card(item, '.place__template', openPopup);
   const cardElement = card.renderCard(item);
+  return cardElement;
+}
+
+initialCards.forEach((item) => {
+  const cardElement = createCard(item);
   cardsSection.prepend(cardElement);
 })
 
-// Отрисовываем новые карточки при сабмите данных из формы
-const createCard = (data) => {
-  const card = new Card(data, '.place__template', openPopup);
-  const cardElement = card.renderCard(data);
-  cardsSection.prepend(card.renderCard());
+function prependCard(data) {
+  const cardElement = createCard(data);
+  cardsSection.prepend(cardElement);
 }
 
+// Отрисовываем изначальные карточки на странице
+// initialCards.forEach((item) => {
+//   const card = new Card(item, '.place__template', openPopup);
+//   const cardElement = card.renderCard(item);
+//   cardsSection.prepend(cardElement);
+// })
+
+// // Отрисовываем новые карточки при сабмите данных из формы
+// const createCard = (data) => {
+//   const card = new Card(data, '.place__template', openPopup);
+//   const cardElement = card.renderCard(data);
+//   cardsSection.prepend(card.renderCard());
+// }
+
 // Добавляем валидацию формы редактирования профиля и формы добавления новых карточек
-const formProfilValidator = new FormValidator(obj, formElement);
+const formProfilValidator = new FormValidator(obj, formProfilElement);
 formProfilValidator.enableValidation();
 
 const formCardValidator = new FormValidator(obj, formCardElement);

@@ -1,12 +1,12 @@
-// Открытие, закрытие попапа редактирования профиля пользователя
+// Открытие, закрытие попапа редактирования профиля пользователяnt
 export const popups = document.querySelectorAll('.popup');
 export const popupProfilOpenButtonElement = document.querySelector('.profile__info-edit-button');
 export const popupProfilElement = document.querySelector('.popup_type_profil');
 // const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
-export const formElement = document.querySelector('.popup__form');
-export const nameInput = formElement.querySelector('.popup__input_info_name');
-export const jobInput = formElement.querySelector('.popup__input_info_job');
+export const formProfilElement = document.forms["popup-form-profil"];
+export const nameInput = formProfilElement.querySelector('.popup__input_info_name');
+export const jobInput = formProfilElement.querySelector('.popup__input_info_job');
 
 export const profilElement = document.querySelector('.profile');
 export const nameProfil = profilElement.querySelector('.profile__info-title');
@@ -15,7 +15,7 @@ export const jobProfil = profilElement.querySelector('.profile__info-subtitle');
 // Открытие, закрытие попапа карточек
 export const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
 export const popupCardElement = document.querySelector('.popup_type_card');
-export const formCardElement  = popupCardElement.querySelector('.popup__form_type_card');
+export const formCardElement = document.forms["popup-form-card"];
 export const popupInputCardElement = formCardElement.querySelector('.popup__input');
 export const popupCardSubmitButtonElement = popupCardElement.querySelector('.popup__submit-button');
 

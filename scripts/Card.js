@@ -7,6 +7,7 @@ export default class Card {
     this._alt = data.alt;
     this._templateSelector = templateSelector;
     this.openPopup = openPopup;
+
   }
 
   _getTemplate() {
@@ -16,25 +17,35 @@ export default class Card {
 
   renderCard() {
     this._cardElement = this._getTemplate();
-    this._cardElement.querySelector('.place__title').textContent = this._name;
-    this._cardElement.querySelector('.place__image').src = this._link;
-    this._cardElement.querySelector('.place__image').alt = this._alt;
+    this._cardImage = this._cardElement.querySelector('.place__image');
+    this._cardTitle = this._cardElement.querySelector('.place__title');
+    this._cardLikeButton = this._cardElement.querySelector('.place__like-button');
+    this._cardDeleteButton = this._cardElement.querySelector('.place__delete-button');
 
-    this._cardElement.querySelector('.place__like-button').addEventListener('click', () => {
-      this._cardElement.querySelector('.place__like-button').classList.toggle('place__like-button_status_active');
+    this._cardTitle.textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._alt;
+
+    this._setEventListeners();
+
+    return this._cardElement;
+  }
+
+  _setEventListeners() {
+    this._cardLikeButton.addEventListener('click', () => {
+      this._cardLikeButton.classList.toggle('place__like-button_status_active');
     });
 
-    this._cardElement.querySelector('.place__delete-button').addEventListener('click', (evt) => {
+    this._cardDeleteButton.addEventListener('click', (evt) => {
       evt.target.closest('.place').remove();
     });
 
-    this._cardElement.querySelector('.place__image').addEventListener('click', (data) => {
+    this._cardImage.addEventListener('click', (data) => {
       popupImage.src = this._link;
       popupImageSubtitle.textContent = this._name;
       popupImage.alt = this._alt;
       this.openPopup(popupImageElement);
     });
-
-    return this._cardElement;
   }
+
 }
