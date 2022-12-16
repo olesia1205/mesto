@@ -1,13 +1,11 @@
-import {popupImage, popupImageSubtitle, popupImageElement} from './constants.js'
-
 export default class Card {
-  constructor(data, templateSelector, openPopup) {
+  constructor(data, templateSelector, openPopup, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._alt = data.alt;
     this._templateSelector = templateSelector;
     this.openPopup = openPopup;
-
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -40,11 +38,8 @@ export default class Card {
       evt.target.closest('.place').remove();
     });
 
-    this._cardImage.addEventListener('click', (data) => {
-      popupImage.src = this._link;
-      popupImageSubtitle.textContent = this._name;
-      popupImage.alt = this._alt;
-      this.openPopup(popupImageElement);
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
     });
   }
 
