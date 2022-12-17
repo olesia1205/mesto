@@ -81,7 +81,7 @@ function handleCardClick(name, link) {
   popupImageSubtitle.textContent = name;
   popupImage.src = link;
   popupImage.alt = name;
-  this.openPopup(popupImageElement);
+  openPopup(popupImageElement);
 }
 
 // Функция создания карточки из класса Card
