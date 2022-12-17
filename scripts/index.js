@@ -78,9 +78,9 @@ function closePopupByEscape(evt) {
 
 // Функция обработчика клика по картинке с открытием попапа, передаем ее в конструктор класса Card
 function handleCardClick(name, link) {
-  popupImageSubtitle.textContent = this._name;
-  popupImage.src = this._link;
-  popupImage.alt = this._alt;
+  popupImageSubtitle.textContent = name;
+  popupImage.src = link;
+  popupImage.alt = name;
   this.openPopup(popupImageElement);
 }
 
@@ -121,10 +121,3 @@ const enableValidation = (obj) => {
 };
 
 enableValidation(obj);
-
-// Добавляем валидацию формы редактирования профиля и формы добавления новых карточек
-// const formProfilValidator = new FormValidator(obj, formProfilElement);
-// formProfilValidator.enableValidation();
-
-// const formCardValidator = new FormValidator(obj, formCardElement);
-// formCardValidator.enableValidation();
