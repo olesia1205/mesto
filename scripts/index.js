@@ -4,17 +4,8 @@ import {popups, popupProfilOpenButtonElement, popupProfilElement, formProfilElem
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-
-// // Открытие и закрытие попапов
-// const openPopup = function(popupProfilElement) {
-//   popupProfilElement.classList.add('popup_is-opened');
-//   document.addEventListener('keydown', closePopupByEscape);
-// }
-
-// const closePopup = function(popupProfilElement) {
-//   popupProfilElement.classList.remove('popup_is-opened');
-//   document.removeEventListener('keydown', closePopupByEscape);
-// }
+import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
 
 // Редактирование профиля пользователя
 function addInfo(evt) {
@@ -53,26 +44,6 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 });
 
 formCardElement.addEventListener('submit', handleCardFormSubmit);
-
-// // Закрытие попапов по Overlay и кнопкам закрытия, крестикам
-// popups.forEach((popup) => {
-//   popup.addEventListener('mousedown', (evt) => {
-//     if (evt.target.classList.contains('popup_is-opened')) {
-//       closePopup(popup);
-//     }
-//     else if (evt.target.classList.contains('popup__close-button')) {
-//       closePopup(popup)
-//     }
-//   })
-// });
-
-// // Функция закрытия попапов по кнопке Escape
-// function closePopupByEscape(evt) {
-//   if (evt.key === 'Escape') {
-//     const openedPopup = document.querySelector('.popup_is-opened');
-//     closePopup(openedPopup);
-//   }
-// }
 
 // Функция обработчика клика по картинке с открытием попапа, передаем ее в конструктор класса Card
 function handleCardClick(name, link) {
@@ -119,3 +90,43 @@ const enableValidation = (obj) => {
 };
 
 enableValidation(obj);
+
+// Создание экземпляра класса Section
+const section = new Section({items: [], renderer: ()=>{}}, cardsSection);
+section.renderItems();
+
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage(popupImageElement, popupImage, popupImageSubtitle);
+
+
+
+// // Открытие и закрытие попапов
+// const openPopup = function(popupProfilElement) {
+//   popupProfilElement.classList.add('popup_is-opened');
+//   document.addEventListener('keydown', closePopupByEscape);
+// }
+
+// const closePopup = function(popupProfilElement) {
+//   popupProfilElement.classList.remove('popup_is-opened');
+//   document.removeEventListener('keydown', closePopupByEscape);
+// }
+
+// // Закрытие попапов по Overlay и кнопкам закрытия, крестикам
+// popups.forEach((popup) => {
+//   popup.addEventListener('mousedown', (evt) => {
+//     if (evt.target.classList.contains('popup_is-opened')) {
+//       closePopup(popup);
+//     }
+//     else if (evt.target.classList.contains('popup__close-button')) {
+//       closePopup(popup)
+//     }
+//   })
+// });
+
+// // Функция закрытия попапов по кнопке Escape
+// function closePopupByEscape(evt) {
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_is-opened');
+//     closePopup(openedPopup);
+//   }
+// }
