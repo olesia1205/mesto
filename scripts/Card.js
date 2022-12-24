@@ -1,10 +1,9 @@
 export default class Card {
-  constructor(data, templateSelector, openPopup, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._alt = data.alt;
     this._templateSelector = templateSelector;
-    this.openPopup = openPopup;
     this._handleCardClick = handleCardClick;
   }
 
