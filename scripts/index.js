@@ -60,17 +60,28 @@ function createCard(item) {
   return cardElement;
 }
 
-// Отрисовываем изначальные 6 карточек на странице
-initialCards.forEach((item) => {
-  const cardElement = createCard(item);
-  cardsSection.prepend(cardElement);
-})
+// // Отрисовываем изначальные 6 карточек на странице
+// initialCards.forEach((item) => {
+//   const cardElement = createCard(item);
+//   cardsSection.prepend(cardElement);
+// })
 
 // Отрисовываем новые карточки при сабмите данных из формы
 function prependCard(data) {
   const cardElement = createCard(data);
   cardsSection.prepend(cardElement);
 }
+
+// Создание экземпляра класса Section
+const section = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    section.addItem(createCard(item));
+  }
+},
+cardsSection
+);
+section.renderItems();
 
 // Создание экземпляров валидаторов всех форм в одном объекте formValidators
 const formValidators = {}
@@ -90,10 +101,6 @@ const enableValidation = (obj) => {
 };
 
 enableValidation(obj);
-
-// Создание экземпляра класса Section
-const section = new Section({items: [], renderer: ()=>{}}, cardsSection);
-section.renderItems();
 
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage(popupImageElement, popupImage, popupImageSubtitle);
