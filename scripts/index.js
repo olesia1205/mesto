@@ -7,24 +7,26 @@ import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 
-// Редактирование профиля пользователя
-function addInfo(evt) {
-  evt.preventDefault();
-  nameProfil.textContent = nameInput.value;
-  jobProfil.textContent = jobInput.value;
-  closePopup(popupProfilElement);
-}
+// // Редактирование профиля пользователя
+// function addInfo(evt) {
+//   evt.preventDefault();
+//   nameProfil.textContent = nameInput.value;
+//   jobProfil.textContent = jobInput.value;
+//   closePopup(popupProfilElement);
+// }
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {
-  nameInput.value = nameProfil.textContent;
-  jobInput.value = jobProfil.textContent;
-  openPopup(popupProfilElement);
+  // nameInput.value = nameProfil.textContent;
+  // jobInput.value = jobProfil.textContent;
+  userInfo.getUserInfo();
+  popupWithProfil.openPopup();
   formValidators['popup-form-profil'].resetValidation();
 });
 
-formProfilElement.addEventListener('submit', addInfo);
+// formProfilElement.addEventListener('submit', addInfo);
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
@@ -80,11 +82,17 @@ const enableValidation = (obj) => {
 
 enableValidation(obj);
 
-// Создание экземпляра класса PopupWithImage и навешивание слушателя для закрытия по Overlay, Esc и крестику
+// Создание экземпляра класса PopupWithImage и навешивание слушателей для закрытия по Overlay, Esc и крестику
 const popupWithImage = new PopupWithImage(popupImageElement, popupImage, popupImageSubtitle);
 popupWithImage.setEventListeners();
 
-// Создание экземпляров класса PopupWithForm
+// Создание экземпляра класса UserInfo
+const userInfo = new UserInfo({
+  profilName: nameProfil,
+  profilJob: jobProfil
+});
+
+// Создание экземпляра класса PopupWithForm для создания новой карточки
 const popupWithCard = new PopupWithForm({
   popupSelector: popupCardElement,
   handleFormSubmit: (formValues) => {
@@ -99,3 +107,18 @@ const popupWithCard = new PopupWithForm({
   }
 });
 popupWithCard.setEventListeners();
+
+// Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
+const popupWithProfil = new PopupWithForm({
+  popupSelector: popupProfilElement,
+  handleFormSubmit: (formValues) => {
+    const data = {
+      name: formValues["name"],
+      job: formValues["job"]
+    };
+
+    userInfo.setUserInfo(data);
+    popupWithProfil.closePopup();
+  }
+});
+popupWithProfil.setEventListeners();
