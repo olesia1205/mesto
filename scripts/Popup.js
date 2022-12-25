@@ -1,11 +1,11 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
-    this._handleEscClose = this._handleEscClose.bind(this);
+    this._handleEscClose = this.handleEscClose.bind(this);
   }
 
   // Закрытие попапов по кнопке Escape
-  _handleEscClose(evt) {
+  handleEscClose(evt) {
     if (evt.key === 'Escape') {
       const openedPopup = document.querySelector('.popup_is-opened');
       this.closePopup(openedPopup);

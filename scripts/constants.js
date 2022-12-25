@@ -2,7 +2,6 @@
 export const popups = document.querySelectorAll('.popup');
 export const popupProfilOpenButtonElement = document.querySelector('.profile__info-edit-button');
 export const popupProfilElement = document.querySelector('.popup_type_profil');
-// const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
 export const formProfilElement = document.forms["popup-form-profil"];
 export const nameInput = formProfilElement.querySelector('.popup__input_info_name');
