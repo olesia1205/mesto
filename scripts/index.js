@@ -1,12 +1,12 @@
-import {popups, popupProfilOpenButtonElement, popupProfilElement, formProfilElement, nameInput, jobInput,
-  nameProfil, jobProfil, popupCardOpenButtonElement, popupCardElement, formCardElement,
-  cardsSection, cardTitleInput, cardLinkInput, popupImage, popupImageSubtitle, popupImageElement, initialCards, obj} from './constants.js'
+import {popupProfilOpenButtonElement, popupProfilElement, formProfilElement, nameInput, jobInput,
+  nameProfil, jobProfil, popupCardOpenButtonElement, popupCardElement, cardsSection, popupImage,
+  popupImageSubtitle, popupImageElement, initialCards, obj} from './constants.js'
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
-// import PopupWithForm from './PopupWithForm.js';
+import PopupWithForm from './PopupWithForm.js';
 
 // Редактирование профиля пользователя
 function addInfo(evt) {
@@ -14,17 +14,6 @@ function addInfo(evt) {
   nameProfil.textContent = nameInput.value;
   jobProfil.textContent = jobInput.value;
   closePopup(popupProfilElement);
-}
-
-const handleCardFormSubmit = function(evt) {
-  evt.preventDefault();
-  const data = {
-    name: cardTitleInput.value,
-    link: cardLinkInput.value,
-    alt: cardTitleInput.value
-  };
-  prependCard(data);
-  closePopup(popupCardElement);
 }
 
 // Открытие попапа редактирования профиля пользователя
@@ -39,12 +28,9 @@ formProfilElement.addEventListener('submit', addInfo);
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
-  openPopup(popupCardElement);
-  formCardElement.reset();
+  popupWithCard.openPopup();
   formValidators['popup-form-card'].resetValidation();
 });
-
-formCardElement.addEventListener('submit', handleCardFormSubmit);
 
 // Функция обработчика клика по картинке с открытием попапа, передается в конструктор класса Card
 function handleCardClick(name, link) {
@@ -98,10 +84,18 @@ enableValidation(obj);
 const popupWithImage = new PopupWithImage(popupImageElement, popupImage, popupImageSubtitle);
 popupWithImage.setEventListeners();
 
-// // Создание экземпляров класса PopupWithForm
-// const popupWithCard = new PopupWithForm({
-//   popupSelector: popupCardElement,
-//   handleFormSubmit: (formData) => {
+// Создание экземпляров класса PopupWithForm
+const popupWithCard = new PopupWithForm({
+  popupSelector: popupCardElement,
+  handleFormSubmit: (formValues) => {
+    const data = {
+      name: formValues["place-name"],
+      link: formValues["place-link"],
+      alt: formValues["place-name"]
+    };
 
-//   }
-// });
+    prependCard(data);
+    popupWithCard.closePopup();
+  }
+});
+popupWithCard.setEventListeners();
