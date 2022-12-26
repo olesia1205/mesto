@@ -9,24 +9,15 @@ import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
 
-// // Редактирование профиля пользователя
-// function addInfo(evt) {
-//   evt.preventDefault();
-//   nameProfil.textContent = nameInput.value;
-//   jobProfil.textContent = jobInput.value;
-//   closePopup(popupProfilElement);
-// }
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {
-  // nameInput.value = nameProfil.textContent;
-  // jobInput.value = jobProfil.textContent;
-  userInfo.getUserInfo();
+  const user = userInfo.getUserInfo();
+  nameInput.value = user.name;
+  jobInput.value = user.job;
   popupWithProfil.openPopup();
   formValidators['popup-form-profil'].resetValidation();
 });
-
-// formProfilElement.addEventListener('submit', addInfo);
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
