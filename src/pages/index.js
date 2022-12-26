@@ -1,3 +1,5 @@
+import './index.css';
+
 import {popupProfilOpenButtonElement, popupProfilElement, nameInput, jobInput,
   nameProfil, jobProfil, popupCardOpenButtonElement, popupCardElement, cardsSection, popupImage,
   popupImageSubtitle, popupImageElement, initialCards, obj} from '../utils/constants.js'

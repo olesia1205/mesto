@@ -1,3 +1,10 @@
+import habarovsk from '../images/habarovsk.jpg';
+import osetia from '../images/osetia.jpg';
+import dagestan from '../images/dagestan.jpg';
+import kholmogorsk from '../images/kholmogorsky-rayon.jpg';
+import ivanovo from '../images/ivanovo.jpg';
+import karachaevsk from '../images/karachaevsk.jpg';
+
 // Открытие, закрытие попапа редактирования профиля пользователяnt
 export const popups = document.querySelectorAll('.popup');
 export const popupProfilOpenButtonElement = document.querySelector('.profile__info-edit-button');
@@ -32,32 +39,32 @@ export const cardLinkInput = formCardElement.querySelector('.popup__input_info_p
 export const initialCards = [
   {
     name: 'Хабаровск',
-    link: './images/habarovsk.jpg',
+    link: habarovsk,
     alt: 'Хабаровск'
   },
   {
     name: 'Осетия',
-    link: './images/osetia.jpg',
+    link: osetia,
     alt: 'Осетия'
   },
   {
     name: 'Дагестан',
-    link: './images/dagestan.jpg',
+    link: dagestan,
     alt: 'Дагестан'
   },
   {
     name: 'Холмогорский район',
-    link: './images/kholmogorsky-rayon.jpg',
+    link: kholmogorsk,
     alt: 'Домбай'
   },
   {
     name: 'Иваново',
-    link: './images/ivanovo.jpg',
+    link: ivanovo,
     alt: 'Иваново'
   },
   {
     name: 'Карачаевск',
-    link: './images/karachaevsk.jpg',
+    link: karachaevsk,
     alt: 'Карачаевск'
   }
 ]
