@@ -1,0 +1,31 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olesia1205/mesto.git"
+  },
+  "author": "Olesia Erastova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olesia1205/mesto/issues"
+  },
+  "homepage": "https://github.com/olesia1205/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "core-js": "^3.27.0"
+  }
+}
