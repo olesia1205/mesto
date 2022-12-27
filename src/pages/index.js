@@ -1,8 +1,7 @@
 import './index.css';
 
-import {popupProfilOpenButtonElement, popupProfilElement, nameInput, jobInput,
-  nameProfil, jobProfil, popupCardOpenButtonElement, popupCardElement, cardsSection, popupImage,
-  popupImageSubtitle, popupImageElement, initialCards, obj} from '../utils/constants.js'
+import {popupProfilOpenButtonElement, nameProfil, jobProfil, popupCardOpenButtonElement,
+  cardsSection, popupImage, popupImageSubtitle, initialCards, obj} from '../utils/constants.js'
 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -14,9 +13,7 @@ import UserInfo from '../components/UserInfo.js';
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {
-  const user = userInfo.getUserInfo();
-  nameInput.value = user.name;
-  jobInput.value = user.job;
+  popupWithProfil.setInputValues(userInfo.getUserInfo());
   popupWithProfil.openPopup();
   formValidators['popup-form-profil'].resetValidation();
 });
@@ -76,7 +73,7 @@ const enableValidation = (obj) => {
 enableValidation(obj);
 
 // Создание экземпляра класса PopupWithImage и навешивание слушателей для закрытия по Overlay, Esc и крестику
-const popupWithImage = new PopupWithImage(popupImageElement, popupImage, popupImageSubtitle);
+const popupWithImage = new PopupWithImage('.popup_type_image', popupImage, popupImageSubtitle);
 popupWithImage.setEventListeners();
 
 // Создание экземпляра класса UserInfo
@@ -87,7 +84,7 @@ const userInfo = new UserInfo({
 
 // Создание экземпляра класса PopupWithForm для создания новой карточки
 const popupWithCard = new PopupWithForm({
-  popupSelector: popupCardElement,
+  popupSelector: '.popup_type_card',
   handleFormSubmit: (formValues) => {
     const data = {
       name: formValues["place-name"],
@@ -103,7 +100,7 @@ popupWithCard.setEventListeners();
 
 // Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
 const popupWithProfil = new PopupWithForm({
-  popupSelector: popupProfilElement,
+  popupSelector: '.popup_type_profil',
   handleFormSubmit: (formValues) => {
     const data = {
       name: formValues["name"],

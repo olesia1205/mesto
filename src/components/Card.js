@@ -2,7 +2,7 @@ export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
-    this._alt = data.alt;
+    this._alt = data.alt || data.name;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
