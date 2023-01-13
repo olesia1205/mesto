@@ -94,9 +94,10 @@ const popupWithProfil = new PopupWithForm({
   handleFormSubmit: (formValues) => {
     const data = {
       name: formValues["name"],
-      about: formValues["job"]
+      about: formValues["about"]
     };
 
+    api.patchUserInfo(data);
     userInfo.setUserInfo(data);
     popupWithProfil.closePopup();
   }
@@ -116,8 +117,7 @@ const api = new Api({
 api.getUserInfo()
   .then((result) => {
     console.log(result);
-    const userInfoFromApi = result;
-    userInfo.setUserInfoFromApi(userInfoFromApi);
+    userInfo.setUserInfoFromApi(result);
   })
   .catch((err) => {
     console.log(err);
@@ -126,6 +126,7 @@ api.getUserInfo()
 // Вызов метода Api для отрисовки карточек, полученных с сервера
 api.getInitialCards()
   .then((result) => {
+    // console.log(result);
     const initialCards = result;
 
     const section = new Section({

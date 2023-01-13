@@ -8,7 +8,7 @@ export default class UserInfo {
   getUserInfo() {
     this._profilInfo = {};
     this._profilInfo.name = this._profilName.textContent;
-    this._profilInfo.job = this._profilJob.textContent;
+    this._profilInfo.about = this._profilJob.textContent;
     return this._profilInfo;
   }
 

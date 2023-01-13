@@ -30,13 +30,13 @@ export default class Api {
       });
   }
 
-  editUserInfo() {
+  patchUserInfo(data) {
     fetch(`${this._url}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: 'Marie Skłodowska Curie',
-        about: 'Physicist and Chemist'
+        name: data.name,
+        about: data.about
       })
     })
     .then(response => {
