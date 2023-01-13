@@ -1,14 +1,13 @@
 export default class Api {
-  constructor(options) {
-    // тело конструктора
+  constructor(config) {
+    this._url = config.baseUrl;
+    this._headers = config.headers;
   }
 
   getUserInfo() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-57/users/me', {
+    return fetch(`${this._url}users/me`, {
       method: 'GET',
-      headers: {
-        authorization: 'b68ddc94-1b57-472c-a3a0-fe863a783fd5'
-      }
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -19,11 +18,9 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-57/cards', {
+    return fetch(`${this._url}cards`, {
       method: 'GET',
-      headers: {
-        authorization: 'b68ddc94-1b57-472c-a3a0-fe863a783fd5'
-      }
+      headers: this._headers
     })
       .then(response => {
         if (response.ok) {
@@ -34,17 +31,37 @@ export default class Api {
   }
 
   editUserInfo() {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-57/users/me', {
+    fetch(`${this._url}users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'b68ddc94-1b57-472c-a3a0-fe863a783fd5',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: 'Marie Skłodowska Curie',
         about: 'Physicist and Chemist'
       })
     })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
+  }
+
+  addNewCard(){
+    return fetch(`${this._url}cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: '',
+        link: ''
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
   }
 
 }
