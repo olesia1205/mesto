@@ -9,6 +9,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 
 // Открытие попапа редактирования профиля пользователя
@@ -43,15 +44,15 @@ function prependCard(data) {
 }
 
 // Создание экземпляра класса Section
-const section = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    section.addItem(createCard(item));
-  }
-},
-cardsSection
-);
-section.renderItems();
+// const section = new Section({
+//   items: initialCards,
+//   renderer: (item) => {
+//     section.addItem(createCard(item));
+//   }
+// },
+// cardsSection
+// );
+// section.renderItems();
 
 // Создание экземпляров валидаторов всех форм в одном объекте formValidators
 const formValidators = {}
@@ -112,3 +113,42 @@ const popupWithProfil = new PopupWithForm({
   }
 });
 popupWithProfil.setEventListeners();
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57',
+  headers: {
+    authorization: 'b68ddc94-1b57-472c-a3a0-fe863a783fd5',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getUserInfo()
+  .then((result) => {
+    // обрабатываем результат
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+
+
+api.getInitialCards()
+  .then((result) => {
+    // обрабатываем результат
+    const initialCards = result;
+
+    const section = new Section({
+      items: initialCards,
+      renderer: (item) => {
+        section.addItem(createCard(item));
+      }
+    },
+    cardsSection
+    );
+    section.renderItems();
+
+  })
+
+  .catch((err) => {
+    console.log(err);
+  })
