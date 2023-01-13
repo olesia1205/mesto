@@ -15,6 +15,11 @@ export default class UserInfo {
   setUserInfo(data) {
     this._profilName.textContent = data.name;
     this._profilJob.textContent = data.about;
+  }
+
+  setUserInfoFromApi(data) {
+    this._profilName.textContent = data.name;
+    this._profilJob.textContent = data.about;
     this._profilAvatar.src = data.avatar;
   }
 }

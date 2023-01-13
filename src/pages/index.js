@@ -117,7 +117,7 @@ api.getUserInfo()
   .then((result) => {
     console.log(result);
     const userInfoFromApi = result;
-    userInfo.setUserInfo(userInfoFromApi);
+    userInfo.setUserInfoFromApi(userInfoFromApi);
   })
   .catch((err) => {
     console.log(err);
