@@ -24,6 +24,10 @@ export const popupImageElement = document.querySelector('.popup_type_image');
 export const popupImage = popupImageElement.querySelector('.popup__image');
 export const popupImageSubtitle = popupImageElement.querySelector('.popup__image-subtitle');
 
+// Открытие, закрытие попапа с согласием на удаление карточек
+export const popupSubmitElement = document.querySelector('.popup_type_confirm');
+export const submitElement = popupSubmitElement.querySelector('.popup__container');
+
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
 export const cardsSection = document.querySelector('.places');
 export const cardTemplate = cardsSection.querySelector('.place__template').content;

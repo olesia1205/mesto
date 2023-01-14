@@ -8,6 +8,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
@@ -29,14 +30,34 @@ function handleCardClick(name, link) {
   popupWithImage.openPopup(name, link);
 }
 
+// Функция обработчика клика по корзине карточки с открытием попапа, передается в конструктор класса Card
+function handleDeleteIconClick() {
+  popupWithSubmit.openPopup();
+};
+
 // Функция создания карточки из класса Card
 function createCard(item) {
-  const card = new Card(item, '.place__template', handleCardClick);
+  const card = new Card(item, '.place__template', handleCardClick, handleDeleteIconClick);
+
+  // {
+  //   data: {
+  //     ...данные карточки (включая информацию по лайкам)
+  //   },
+  //   handleCardClick: () => {
+  //     ...что должно произойти при клике на картинку
+  //   },
+  //   handleLikeClick: (card) => {
+  //     ...что должно произойти при клике на лайк
+  //   },
+  //   handleDeleteIconClick: (card) => {
+  //     ...что должно произойти при клике на удаление
+  // },
+
   const cardElement = card.renderCard(item);
   return cardElement;
 }
 
-// Отрисовываем новые карточки при сабмите данных из формы
+// Отрисовываем новые карточки при сабмите данных из формы в начале секции
 function prependCard(data) {
   const cardElement = createCard(data);
   cardsSection.prepend(cardElement);
@@ -72,6 +93,9 @@ const userInfo = new UserInfo({
   profilAvatar: avatarProfil
 });
 
+// Создание экземпляра класса PopupWithSubmit для подтверждения удаления карточки
+const popupWithSubmit = new PopupWithSubmit('.popup_type_confirm');
+
 // Создание экземпляра класса PopupWithForm для создания новой карточки
 const popupWithCard = new PopupWithForm({
   popupSelector: '.popup_type_card',
@@ -82,6 +106,7 @@ const popupWithCard = new PopupWithForm({
       alt: formValues["place-name"]
     };
 
+    api.postNewCard(data);
     prependCard(data);
     popupWithCard.closePopup();
   }
@@ -116,7 +141,7 @@ const api = new Api({
 // Вызов метода Api для отрисовки информации о пользователе с сервера
 api.getUserInfo()
   .then((result) => {
-    console.log(result);
+    // console.log(result);
     userInfo.setUserInfoFromApi(result);
   })
   .catch((err) => {
@@ -138,23 +163,7 @@ api.getInitialCards()
     cardsSection
     );
     section.renderItems();
-
   })
   .catch((err) => {
     console.log(err);
   })
-
-
-
-  // Создание экземпляра класса Section
-// const section = new Section({
-//   items: initialCards,
-//   renderer: (item) => {
-//     section.addItem(createCard(item));
-//   }
-// },
-// cardsSection
-// );
-// section.renderItems();
-
-

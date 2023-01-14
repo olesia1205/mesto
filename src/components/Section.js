@@ -10,6 +10,6 @@ export default class Section {
   }
 
   addItem(itemHtml) {
-    this._container.prepend(itemHtml);
+    this._container.append(itemHtml);
   }
 }
