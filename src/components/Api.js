@@ -4,7 +4,7 @@ export default class Api {
     this._headers = config.headers;
   }
 
-  getUserInfo() {
+  _getUserInfo() {
     return fetch(`${this._url}users/me`, {
       method: 'GET',
       headers: this._headers
@@ -17,7 +17,7 @@ export default class Api {
       });
   }
 
-  getInitialCards() {
+  _getInitialCards() {
     return fetch(`${this._url}cards`, {
       method: 'GET',
       headers: this._headers
@@ -28,6 +28,10 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       });
+  }
+
+  getAllNeededData() {
+    return Promise.all([this._getUserInfo(), this._getInitialCards()]);
   }
 
   patchUserInfo(data) {
@@ -47,7 +51,7 @@ export default class Api {
     });
   }
 
-  postNewCard(data){
+  postNewCard(data) {
     return fetch(`${this._url}cards`, {
       method: 'POST',
       headers: this._headers,
@@ -55,6 +59,19 @@ export default class Api {
         name: data.name,
         link: data.link
       })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._url}cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
     })
     .then(response => {
       if (response.ok) {

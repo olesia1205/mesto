@@ -25,33 +25,50 @@ popupCardOpenButtonElement.addEventListener('click', function() {
   formValidators['popup-form-card'].resetValidation();
 });
 
-// Функция обработчика клика по картинке с открытием попапа, передается в конструктор класса Card
-function handleCardClick(name, link) {
-  popupWithImage.openPopup(name, link);
-}
+// // Функция обработчика клика по картинке с открытием попапа, передается в конструктор класса Card
+// function handleCardClick(name, link) {
+//   popupWithImage.openPopup(name, link);
+// }
 
-// Функция обработчика клика по корзине карточки с открытием попапа, передается в конструктор класса Card
-function handleDeleteIconClick() {
-  popupWithSubmit.openPopup();
-};
+// // Функция обработчика клика по корзине карточки с открытием попапа, передается в конструктор класса Card
+// function handleDeleteIconClick() {
+//   popupWithSubmit.openPopup();
 
-// Функция создания карточки из класса Card
+// };
+
+// // Функция создания карточки из класса Card
+// function createCard(item) {
+//   const card = new Card(item, '.place__template', handleCardClick, handleDeleteIconClick, userInfo.setUserData());
+
+//   const cardElement = card.renderCard(item);
+//   return cardElement;
+// }
+
 function createCard(item) {
-  const card = new Card(item, '.place__template', handleCardClick, handleDeleteIconClick);
+  const card = new Card({
+    item: {
+      name: item.name,
+      link: item.link,
+      alt: item.alt || item.name,
+      cardId: item._id,
+      likes: item.likes,
+      owner: item.owner
+    },
 
-  // {
-  //   data: {
-  //     ...данные карточки (включая информацию по лайкам)
-  //   },
-  //   handleCardClick: () => {
-  //     ...что должно произойти при клике на картинку
-  //   },
-  //   handleLikeClick: (card) => {
-  //     ...что должно произойти при клике на лайк
-  //   },
-  //   handleDeleteIconClick: (card) => {
-  //     ...что должно произойти при клике на удаление
-  // },
+    handleCardClick: (name, link) => {
+      popupWithImage.openPopup(name, link);
+    },
+
+    handleLikeClick: (card) => {},
+
+    handleDeleteIconClick: (cardId) => {
+      popupWithSubmit.openPopup();
+      popupWithSubmit.setFunctionSubmit(() => {api.deleteCard('63c44333f88efd5beceb862a')});
+      popupWithSubmit.closePopup();
+    }
+  },
+  '.place__template',
+  userInfo.setUserData());
 
   const cardElement = card.renderCard(item);
   return cardElement;
@@ -93,8 +110,25 @@ const userInfo = new UserInfo({
   profilAvatar: avatarProfil
 });
 
+// Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
+const popupWithProfil = new PopupWithForm({
+  popupSelector: '.popup_type_profil',
+  handleFormSubmit: (formValues) => {
+    const data = {
+      name: formValues["name"],
+      about: formValues["about"]
+    };
+
+    api.patchUserInfo(data);
+    userInfo.setUserInfo(data);
+    popupWithProfil.closePopup();
+  }
+});
+popupWithProfil.setEventListeners();
+
 // Создание экземпляра класса PopupWithSubmit для подтверждения удаления карточки
 const popupWithSubmit = new PopupWithSubmit('.popup_type_confirm');
+popupWithSubmit.setEventListeners();
 
 // Создание экземпляра класса PopupWithForm для создания новой карточки
 const popupWithCard = new PopupWithForm({
@@ -113,22 +147,6 @@ const popupWithCard = new PopupWithForm({
 });
 popupWithCard.setEventListeners();
 
-// Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
-const popupWithProfil = new PopupWithForm({
-  popupSelector: '.popup_type_profil',
-  handleFormSubmit: (formValues) => {
-    const data = {
-      name: formValues["name"],
-      about: formValues["about"]
-    };
-
-    api.patchUserInfo(data);
-    userInfo.setUserInfo(data);
-    popupWithProfil.closePopup();
-  }
-});
-popupWithProfil.setEventListeners();
-
 // Инициализация класса Api
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57/',
@@ -138,22 +156,14 @@ const api = new Api({
   }
 });
 
-// Вызов метода Api для отрисовки информации о пользователе с сервера
-api.getUserInfo()
+api.getAllNeededData()
   .then((result) => {
-    // console.log(result);
-    userInfo.setUserInfoFromApi(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+    const [dataForUserInfo, dataForInitialCards] = result;
+    console.log(result);
 
-// Вызов метода Api для отрисовки карточек, полученных с сервера
-api.getInitialCards()
-  .then((result) => {
-    // console.log(result);
-    const initialCards = result;
+    userInfo.setUserInfoFromApi(dataForUserInfo);
 
+    const initialCards = dataForInitialCards;
     const section = new Section({
       items: initialCards,
       renderer: (item) => {
@@ -167,3 +177,35 @@ api.getInitialCards()
   .catch((err) => {
     console.log(err);
   })
+
+
+
+// // Вызов метода Api для отрисовки информации о пользователе с сервера
+// api._getUserInfo()
+//   .then((result) => {
+//     console.log(result);
+//     userInfo.setUserInfoFromApi(result);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })
+
+// // Вызов метода Api для отрисовки карточек, полученных с сервера
+// api._getInitialCards()
+//   .then((result) => {
+//     console.log(result);
+//     const initialCards = result;
+
+//     const section = new Section({
+//       items: initialCards,
+//       renderer: (item) => {
+//         section.addItem(createCard(item));
+//       }
+//     },
+//     cardsSection
+//     );
+//     section.renderItems();
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })

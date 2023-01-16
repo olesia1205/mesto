@@ -21,5 +21,10 @@ export default class UserInfo {
     this._profilName.textContent = data.name;
     this._profilJob.textContent = data.about;
     this._profilAvatar.src = data.avatar;
+    this._userData = data;
+  }
+
+  setUserData() {
+    return this._userData;
   }
 }
