@@ -1,30 +1,17 @@
-// export default class Card {
-//   constructor(data, templateSelector, handleCardClick, handleDeleteIconClick, userInfo) {
-//     this._name = data.name;
-//     this._link = data.link;
-//     this._alt = data.alt || data.name;
-//     this._likes = data.likes.length;
-//     this._ownerCardId = data.owner._id;
-//     this._cardId = data._id;
-//     this._templateSelector = templateSelector;
-//     this._handleCardClick = handleCardClick;
-//     this._handleDeleteIconClick = handleDeleteIconClick;
-//     this._userId = userInfo._id;
-//   }
-
 export default class Card {
   constructor({item, handleCardClick, handleLikeClick, handleDeleteIconClick}, templateSelector, userInfo) {
     this._name = item.name;
     this._link = item.link;
     this._alt = item.alt;
-    this._likes = item.likes.length;
-    this._ownerCardId = item.owner._id;
+    this._likes = item.likes;
+    this._ownerCardId = item.owner;
     this._cardId = item.cardId;
+
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateSelector = templateSelector;
-    this._userId = userInfo._id;
+    this._userId = userInfo;
   }
 
   _getTemplate() {
@@ -43,7 +30,7 @@ export default class Card {
     this._cardTitle.textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._alt;
-    this._cardLikeNumber.textContent = this._likes;
+    this._cardLikeNumber.textContent = this._likes.length;
 
     this._setEventListeners();
 
@@ -55,9 +42,9 @@ export default class Card {
       this._cardLikeButton.classList.toggle('place__like-button_status_active');
     });
 
-    if (this._ownerCardId === this._userId) {
+    if (this._ownerCardId._id === this._userId._id) {
       this._cardDeleteButton.addEventListener('click', () => {
-        this._handleDeleteIconClick();
+        this._handleDeleteIconClick(this._cardId);
       });
     } else {
       this._cardDeleteButton.remove();

@@ -12,140 +12,14 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
-// Открытие попапа редактирования профиля пользователя
-popupProfilOpenButtonElement.addEventListener('click', function() {
-  popupWithProfil.setInputValues(userInfo.getUserInfo());
-  popupWithProfil.openPopup();
-  formValidators['popup-form-profil'].resetValidation();
-});
-
-// Открытие попапа карточек
-popupCardOpenButtonElement.addEventListener('click', function() {
-  popupWithCard.openPopup();
-  formValidators['popup-form-card'].resetValidation();
-});
-
-// // Функция обработчика клика по картинке с открытием попапа, передается в конструктор класса Card
-// function handleCardClick(name, link) {
-//   popupWithImage.openPopup(name, link);
-// }
-
-// // Функция обработчика клика по корзине карточки с открытием попапа, передается в конструктор класса Card
-// function handleDeleteIconClick() {
-//   popupWithSubmit.openPopup();
-
-// };
-
-// // Функция создания карточки из класса Card
-// function createCard(item) {
-//   const card = new Card(item, '.place__template', handleCardClick, handleDeleteIconClick, userInfo.setUserData());
-
-//   const cardElement = card.renderCard(item);
-//   return cardElement;
-// }
-
-function createCard(item) {
-  const card = new Card({
-    item: {
-      name: item.name,
-      link: item.link,
-      alt: item.alt || item.name,
-      cardId: item._id,
-      likes: item.likes,
-      owner: item.owner
-    },
-
-    handleCardClick: (name, link) => {
-      popupWithImage.openPopup(name, link);
-    },
-
-    handleLikeClick: (card) => {},
-
-    handleDeleteIconClick: (cardId) => {
-      popupWithSubmit.openPopup();
-      popupWithSubmit.setFunctionSubmit(() => {api.deleteCard('63c44333f88efd5beceb862a')});
-      popupWithSubmit.closePopup();
-    }
-  },
-  '.place__template',
-  userInfo.setUserData());
-
-  const cardElement = card.renderCard(item);
-  return cardElement;
-}
-
-// Отрисовываем новые карточки при сабмите данных из формы в начале секции
-function prependCard(data) {
-  const cardElement = createCard(data);
-  cardsSection.prepend(cardElement);
-}
-
-// Создание экземпляров валидаторов всех форм в одном объекте formValidators
-const formValidators = {}
-
-// Включение валидации
-const enableValidation = (obj) => {
-  const formList = Array.from(document.querySelectorAll(obj.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(obj, formElement);
-
-    // получаем данные из атрибута `name` у формы
-    const formName = formElement.getAttribute('name');
-    // записываем в объект под именем формы
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(obj);
 
 // Создание экземпляра класса PopupWithImage и навешивание слушателей для закрытия по Overlay, Esc и крестику
 const popupWithImage = new PopupWithImage('.popup_type_image', popupImage, popupImageSubtitle);
 popupWithImage.setEventListeners();
 
-// Создание экземпляра класса UserInfo
-const userInfo = new UserInfo({
-  profilName: nameProfil,
-  profilJob: jobProfil,
-  profilAvatar: avatarProfil
-});
-
-// Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
-const popupWithProfil = new PopupWithForm({
-  popupSelector: '.popup_type_profil',
-  handleFormSubmit: (formValues) => {
-    const data = {
-      name: formValues["name"],
-      about: formValues["about"]
-    };
-
-    api.patchUserInfo(data);
-    userInfo.setUserInfo(data);
-    popupWithProfil.closePopup();
-  }
-});
-popupWithProfil.setEventListeners();
-
 // Создание экземпляра класса PopupWithSubmit для подтверждения удаления карточки
 const popupWithSubmit = new PopupWithSubmit('.popup_type_confirm');
 popupWithSubmit.setEventListeners();
-
-// Создание экземпляра класса PopupWithForm для создания новой карточки
-const popupWithCard = new PopupWithForm({
-  popupSelector: '.popup_type_card',
-  handleFormSubmit: (formValues) => {
-    const data = {
-      name: formValues["place-name"],
-      link: formValues["place-link"],
-      alt: formValues["place-name"]
-    };
-
-    api.postNewCard(data);
-    prependCard(data);
-    popupWithCard.closePopup();
-  }
-});
-popupWithCard.setEventListeners();
 
 // Инициализация класса Api
 const api = new Api({
@@ -173,39 +47,129 @@ api.getAllNeededData()
     cardsSection
     );
     section.renderItems();
+
   })
-  .catch((err) => {
-    console.log(err);
-  })
+  .catch(err => alert(err));
+
+// Создание экземпляра класса Card
+function createCard(item) {
+  const card = new Card({
+    item: {
+      name: item.name,
+      link: item.link,
+      alt: item.alt || item.name,
+      cardId: item._id,
+      likes: item.likes,
+      owner: item.owner
+    },
+
+    handleCardClick: (name, link) => {
+      popupWithImage.openPopup(name, link);
+    },
+
+    handleLikeClick: () => {},
+
+    handleDeleteIconClick: (cardId) => {
+      popupWithSubmit.openPopup();
+      popupWithSubmit.setFunctionSubmit(() => {
+        api.deleteCard(cardId)
+        .then(response => {
+          console.log(response);
+          popupWithSubmit.closePopup();
+        })
+        .catch(err => console.log(err))
+    });
+
+    }
+  },
+  '.place__template',
+  userInfo.setUserData());
+
+  const cardElement = card.renderCard(item);
+  return cardElement;
+}
+
+// Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
+const popupWithProfil = new PopupWithForm({
+  popupSelector: '.popup_type_profil',
+  handleFormSubmit: (formValues) => {
+    const data = {
+      name: formValues["name"],
+      about: formValues["about"]
+    };
+
+    api.patchUserInfo(data);
+    userInfo.setUserInfo(data);
+    popupWithProfil.closePopup();
+  }
+});
+popupWithProfil.setEventListeners();
+
+// Создание экземпляра класса PopupWithForm для создания новой карточки
+const popupWithCard = new PopupWithForm({
+  popupSelector: '.popup_type_card',
+  handleFormSubmit: (formValues) => {
+    const data = {
+      name: formValues["place-name"],
+      link: formValues["place-link"],
+      alt: formValues["place-name"]
+    };
+
+    api.postNewCard(data)
+      .then((response) => {
+        prependCard(response);
+        popupWithCard.closePopup();
+      })
+      .catch((err) => console.log(err));
+
+  }
+});
+popupWithCard.setEventListeners();
+
+// Отрисовка новых карточек при сабмите данных из формы в начале секции
+function prependCard(data) {
+  const cardElement = createCard(data);
+  cardsSection.prepend(cardElement);
+}
+
+// Создание экземпляра класса UserInfo
+const userInfo = new UserInfo({
+  profilName: nameProfil,
+  profilJob: jobProfil,
+  profilAvatar: avatarProfil
+});
 
 
 
-// // Вызов метода Api для отрисовки информации о пользователе с сервера
-// api._getUserInfo()
-//   .then((result) => {
-//     console.log(result);
-//     userInfo.setUserInfoFromApi(result);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   })
 
-// // Вызов метода Api для отрисовки карточек, полученных с сервера
-// api._getInitialCards()
-//   .then((result) => {
-//     console.log(result);
-//     const initialCards = result;
+// Открытие попапа редактирования профиля пользователя
+popupProfilOpenButtonElement.addEventListener('click', function() {
+  popupWithProfil.setInputValues(userInfo.getUserInfo());
+  popupWithProfil.openPopup();
+  formValidators['popup-form-profil'].resetValidation();
+});
 
-//     const section = new Section({
-//       items: initialCards,
-//       renderer: (item) => {
-//         section.addItem(createCard(item));
-//       }
-//     },
-//     cardsSection
-//     );
-//     section.renderItems();
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   })
+// Открытие попапа карточек
+popupCardOpenButtonElement.addEventListener('click', function() {
+  popupWithCard.openPopup();
+  formValidators['popup-form-card'].resetValidation();
+});
+
+// Создание экземпляров валидаторов всех форм в одном объекте formValidators
+const formValidators = {}
+
+// Включение валидации
+const enableValidation = (obj) => {
+  const formList = Array.from(document.querySelectorAll(obj.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(obj, formElement);
+
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name');
+    // записываем в объект под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(obj);
