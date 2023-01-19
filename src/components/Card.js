@@ -55,4 +55,7 @@ export default class Card {
     });
   }
 
+  removeCard() {
+    this._cardElement.closest('.place').remove();
+  }
 }

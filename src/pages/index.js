@@ -1,6 +1,6 @@
 import './index.css';
 
-import {popupProfilOpenButtonElement, nameProfil, jobProfil, avatarProfil, popupCardOpenButtonElement,
+import {popupProfilOpenButtonElement, nameProfil, jobProfil, avatarProfil, avatarCover, popupCardOpenButtonElement,
   cardsSection, popupImage, popupImageSubtitle, obj} from '../utils/constants.js'
 
 import Card from '../components/Card.js';
@@ -9,6 +9,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
+import PopupWithAvatar from '../components/PopupWithAvatar';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
@@ -67,15 +68,18 @@ function createCard(item) {
       popupWithImage.openPopup(name, link);
     },
 
-    handleLikeClick: () => {},
+    handleLikeClick: (cardId) => {
+
+    },
 
     handleDeleteIconClick: (cardId) => {
       popupWithSubmit.openPopup();
-      popupWithSubmit.setFunctionSubmit(() => {
+      popupWithSubmit.addTask(() => {
         api.deleteCard(cardId)
         .then(response => {
           console.log(response);
           popupWithSubmit.closePopup();
+          card.removeCard();
         })
         .catch(err => console.log(err))
     });
@@ -121,7 +125,6 @@ const popupWithCard = new PopupWithForm({
         popupWithCard.closePopup();
       })
       .catch((err) => console.log(err));
-
   }
 });
 popupWithCard.setEventListeners();
@@ -139,8 +142,27 @@ const userInfo = new UserInfo({
   profilAvatar: avatarProfil
 });
 
+// Создание экземпляра класса PopupWithAvatar
+const popupWithAvatar = new PopupWithAvatar({
+  popupSelector: '.popup_type_avatar',
+  handleFormSubmit: (formValues) => {
+    const avatar = formValues["avatar-link"];
+    api.changeAvatar(avatar)
+      .then((response) => {
+        console.log(response);
+        popupWithAvatar.closePopup();
+        userInfo.changeAvatar(avatar);
+      })
+      .catch((err) => console.log(err));
+  }
+});
+popupWithAvatar.setEventListeners();
 
-
+// Открытие попапа редактирования аватара пользователя
+avatarCover.addEventListener('click', function() {
+  popupWithAvatar.openPopup();
+  formValidators['popup-form-avatar'].resetValidation();
+});
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {

@@ -81,5 +81,46 @@ export default class Api {
     });
   }
 
+  putLike(cardId) {
+    return fetch(`${this._url}cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
+  }
+
+  deleteLike(cardId) {
+    return fetch(`${this._url}cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
+  }
+
+  changeAvatar(avatar) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    });
+  }
 }
 
