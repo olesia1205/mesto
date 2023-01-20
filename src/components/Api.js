@@ -9,11 +9,11 @@ export default class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
+      .then(response => {
+        if (response.ok) {
+          return response.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return Promise.reject(`Ошибка: ${response.status}`);
       });
   }
 

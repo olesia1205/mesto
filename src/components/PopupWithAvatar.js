@@ -25,4 +25,9 @@ export default class PopupWithAvatar extends Popup {
       this._handleFormSubmit(this._getInputValues());
     })
   }
+
+  closePopup() {
+    super.closePopup();
+    this._formElement.reset();
+  }
 }

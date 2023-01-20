@@ -5,6 +5,7 @@ export default class PopupWithSubmit extends Popup {
     super(popupSelector);
 
     this._formElement = this._popup.querySelector('.popup__form_type_confirm');
+    this._submitButton = this._formElement.querySelector('.popup__button-confirm');
   }
 
   setEventListeners() {
@@ -14,6 +15,11 @@ export default class PopupWithSubmit extends Popup {
       evt.preventDefault();
       this._handleFormSubmit();
     });
+  }
+
+  openPopup() {
+    super.openPopup();
+    this._submitButton.focus();
   }
 
   addTask(task) {

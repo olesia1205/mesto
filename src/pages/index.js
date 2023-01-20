@@ -34,7 +34,7 @@ const api = new Api({
 api.getAllNeededData()
   .then((result) => {
     const [dataForUserInfo, dataForInitialCards] = result;
-    console.log(result);
+    // console.log(result);
 
     userInfo.setUserInfoFromApi(dataForUserInfo);
 
@@ -91,14 +91,12 @@ function createCard(item) {
       popupWithSubmit.openPopup();
       popupWithSubmit.addTask(() => {
         api.deleteCard(cardId)
-        .then((response) => {
-          console.log(response.likes);
+        .then(() => {
           popupWithSubmit.closePopup();
           card.removeCard();
         })
         .catch(err => console.log(err))
-    });
-
+      });
     }
   },
   '.place__template',
@@ -117,6 +115,7 @@ const popupWithProfil = new PopupWithForm({
       about: formValues["about"]
     };
 
+    popupWithProfil.setPreloader();
     api.patchUserInfo(data);
     userInfo.setUserInfo(data);
     popupWithProfil.closePopup();
@@ -134,12 +133,13 @@ const popupWithCard = new PopupWithForm({
       alt: formValues["place-name"]
     };
 
+    popupWithCard.setPreloader();
     api.postNewCard(data)
       .then((response) => {
         prependCard(response);
         popupWithCard.closePopup();
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 });
 popupWithCard.setEventListeners();
@@ -162,9 +162,10 @@ const popupWithAvatar = new PopupWithAvatar({
   popupSelector: '.popup_type_avatar',
   handleFormSubmit: (formValues) => {
     const avatar = formValues["avatar-link"];
+
+    popupWithAvatar.setPreloader();
     api.changeAvatar(avatar)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         popupWithAvatar.closePopup();
         userInfo.changeAvatar(avatar);
       })
@@ -175,12 +176,14 @@ popupWithAvatar.setEventListeners();
 
 // Открытие попапа редактирования аватара пользователя
 avatarCover.addEventListener('click', function() {
+  popupWithAvatar.removePreloader();
   popupWithAvatar.openPopup();
   formValidators['popup-form-avatar'].resetValidation();
 });
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {
+  popupWithProfil.removePreloader();
   popupWithProfil.setInputValues(userInfo.getUserInfo());
   popupWithProfil.openPopup();
   formValidators['popup-form-profil'].resetValidation();
@@ -188,6 +191,7 @@ popupProfilOpenButtonElement.addEventListener('click', function() {
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
+  popupWithCard.removePreloader();
   popupWithCard.openPopup();
   formValidators['popup-form-card'].resetValidation();
 });
