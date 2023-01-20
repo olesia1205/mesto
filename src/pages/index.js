@@ -39,6 +39,7 @@ api.getAllNeededData()
     userInfo.setUserInfoFromApi(dataForUserInfo);
 
     const initialCards = dataForInitialCards;
+
     const section = new Section({
       items: initialCards,
       renderer: (item) => {
@@ -68,16 +69,30 @@ function createCard(item) {
       popupWithImage.openPopup(name, link);
     },
 
-    handleLikeClick: (cardId) => {
-
+    handleLikeClick: (cardId, cardLikeButton) => {
+      if(cardLikeButton.classList.contains('place__like-button_status_active')) {
+        api.deleteLike(cardId)
+          .then((response) => {
+            cardLikeButton.classList.remove('place__like-button_status_active');
+            card.countLikesNumber(response.likes);
+          })
+          .catch(err => console.log(err))
+      } else {
+        api.putLike(cardId)
+          .then((response) => {
+            cardLikeButton.classList.add('place__like-button_status_active');
+            card.countLikesNumber(response.likes);
+          })
+          .catch(err => console.log(err))
+      }
     },
 
     handleDeleteIconClick: (cardId) => {
       popupWithSubmit.openPopup();
       popupWithSubmit.addTask(() => {
         api.deleteCard(cardId)
-        .then(response => {
-          console.log(response);
+        .then((response) => {
+          console.log(response.likes);
           popupWithSubmit.closePopup();
           card.removeCard();
         })

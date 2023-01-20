@@ -32,6 +32,14 @@ export default class Card {
     this._cardImage.alt = this._alt;
     this._cardLikeNumber.textContent = this._likes.length;
 
+    // Проверка, есть ли внутри массива likes объект с id === userId
+    const likedCards = this._likes.map((el) => {
+      return el._id;
+    })
+    if (likedCards.includes(this._userId._id)) {
+      this._cardLikeButton.classList.add('place__like-button_status_active');
+    }
+
     this._setEventListeners();
 
     return this._cardElement;
@@ -39,7 +47,7 @@ export default class Card {
 
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', () => {
-      this._cardLikeButton.classList.toggle('place__like-button_status_active');
+      this._handleLikeClick(this._cardId, this._cardLikeButton);
     });
 
     if (this._ownerCardId._id === this._userId._id) {
@@ -58,4 +66,9 @@ export default class Card {
   removeCard() {
     this._cardElement.closest('.place').remove();
   }
+
+  countLikesNumber(response) {
+    this._cardLikeNumber.textContent = response.length;
+  }
+
 }

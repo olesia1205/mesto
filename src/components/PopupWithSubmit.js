@@ -19,6 +19,5 @@ export default class PopupWithSubmit extends Popup {
   addTask(task) {
     this._handleFormSubmit = task;
   }
-
 }
 
