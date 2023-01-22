@@ -1,11 +1,11 @@
 export default class Card {
-  constructor({item, handleCardClick, handleLikeClick, handleDeleteIconClick}, templateSelector, userInfo) {
-    this._name = item.name;
-    this._link = item.link;
-    this._alt = item.alt;
-    this._likes = item.likes;
-    this._ownerCardId = item.owner;
-    this._cardId = item.cardId;
+  constructor({cardData, handleCardClick, handleLikeClick, handleDeleteIconClick}, templateSelector, userInfo) {
+    this._name = cardData.name;
+    this._link = cardData.link;
+    this._alt = cardData.alt;
+    this._likes = cardData.likes;
+    this._ownerCardId = cardData.owner;
+    this._cardId = cardData.cardId;
 
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
@@ -19,7 +19,7 @@ export default class Card {
     return cardElement;
   }
 
-  renderCard() {
+  generateCard() {
     this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector('.place__image');
     this._cardTitle = this._cardElement.querySelector('.place__title');
@@ -32,17 +32,20 @@ export default class Card {
     this._cardImage.alt = this._alt;
     this._cardLikeNumber.textContent = this._likes.length;
 
-    // Проверка, есть ли внутри массива likes объект с id === userId
-    const likedCards = this._likes.map((el) => {
-      return el._id;
-    })
-    if (likedCards.includes(this._userId._id)) {
+    // Проверка, есть ли внутри массива likes - объект с id === userId
+    if (this.isLiked()) {
       this._cardLikeButton.classList.add('place__like-button_status_active');
+    } else {
+      this._cardLikeButton.classList.add('place__like-button');
     }
 
     this._setEventListeners();
 
     return this._cardElement;
+  }
+
+  isLiked() {
+    this._likes.some(card => card._id === this._userId._id);
   }
 
   _setEventListeners() {
@@ -67,8 +70,7 @@ export default class Card {
     this._cardElement.closest('.place').remove();
   }
 
-  countLikesNumber(response) {
+  updateLikes(response) {
     this._cardLikeNumber.textContent = response.length;
   }
-
 }

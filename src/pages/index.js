@@ -34,7 +34,7 @@ const api = new Api({
 api.getAllNeededData()
   .then((result) => {
     const [dataForUserInfo, dataForInitialCards] = result;
-    // console.log(result);
+    console.log(result);
 
     userInfo.setUserInfoFromApi(dataForUserInfo);
 
@@ -54,15 +54,15 @@ api.getAllNeededData()
   .catch(err => alert(err));
 
 // Создание экземпляра класса Card
-function createCard(item) {
+function createCard(cardData) {
   const card = new Card({
-    item: {
-      name: item.name,
-      link: item.link,
-      alt: item.alt || item.name,
-      cardId: item._id,
-      likes: item.likes,
-      owner: item.owner
+    cardData: {
+      name: cardData.name,
+      link: cardData.link,
+      alt: cardData.alt || cardData.name,
+      cardId: cardData._id,
+      likes: cardData.likes,
+      owner: cardData.owner
     },
 
     handleCardClick: (name, link) => {
@@ -74,14 +74,14 @@ function createCard(item) {
         api.deleteLike(cardId)
           .then((response) => {
             cardLikeButton.classList.remove('place__like-button_status_active');
-            card.countLikesNumber(response.likes);
+            card.updateLikes(response.likes);
           })
           .catch(err => console.log(err))
       } else {
         api.putLike(cardId)
           .then((response) => {
             cardLikeButton.classList.add('place__like-button_status_active');
-            card.countLikesNumber(response.likes);
+            card.updateLikes(response.likes);
           })
           .catch(err => console.log(err))
       }
@@ -102,7 +102,7 @@ function createCard(item) {
   '.place__template',
   userInfo.setUserData());
 
-  const cardElement = card.renderCard(item);
+  const cardElement = card.generateCard(cardData);
   return cardElement;
 }
 
