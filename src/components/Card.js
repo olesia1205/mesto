@@ -12,6 +12,7 @@ export default class Card {
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateSelector = templateSelector;
     this._userId = userInfo;
+
   }
 
   _getTemplate() {
@@ -32,33 +33,28 @@ export default class Card {
     this._cardImage.alt = this._alt;
     this._cardLikeNumber.textContent = this._likes.length;
 
-    // Проверка, есть ли внутри массива likes - объект с id === userId
-    if (this.isLiked()) {
-      this._cardLikeButton.classList.add('place__like-button_status_active');
-    } else {
-      this._cardLikeButton.classList.add('place__like-button');
-    }
-
+    this.updateLikesCount(this._likes);
     this._setEventListeners();
 
     return this._cardElement;
   }
 
   isLiked() {
-    this._likes.some(card => card._id === this._userId._id);
+    return this._likes.some(el => el._id === this._userId)
   }
 
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', () => {
-      this._handleLikeClick(this._cardId, this._cardLikeButton);
+      this._handleLikeClick(this._cardId);
     });
 
-    if (this._ownerCardId._id === this._userId._id) {
+    if (this._ownerCardId._id === this._userId) {
       this._cardDeleteButton.addEventListener('click', () => {
         this._handleDeleteIconClick(this._cardId);
       });
     } else {
       this._cardDeleteButton.remove();
+      this._cardDeleteButton = null;
     }
 
     this._cardImage.addEventListener('click', () => {
@@ -70,7 +66,12 @@ export default class Card {
     this._cardElement.closest('.place').remove();
   }
 
-  updateLikes(response) {
-    this._cardLikeNumber.textContent = response.length;
+  updateLikesCount(likes) {
+    this._cardLikeNumber.textContent = likes.length;
+    if (this.isLiked()) {
+      this._cardLikeButton.classList.add('place__like-button_status_active');
+    } else {
+      this._cardLikeButton.classList.remove('place__like-button_status_active');
+    }
   }
 }

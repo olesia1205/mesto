@@ -8,9 +8,9 @@ export const nameInput = formProfilElement.querySelector('.popup__input_info_nam
 export const jobInput = formProfilElement.querySelector('.popup__input_info_job');
 
 export const profilElement = document.querySelector('.profile');
-export const nameProfil = profilElement.querySelector('.profile__info-title');
-export const jobProfil = profilElement.querySelector('.profile__info-subtitle');
-export const avatarProfil = document.querySelector('.profile__avatar');
+export const nameProfile = profilElement.querySelector('.profile__info-title');
+export const jobProfile = profilElement.querySelector('.profile__info-subtitle');
+export const avatarProfile = document.querySelector('.profile__avatar');
 export const avatarCover = document.querySelector('.profile__avatar-cover');
 
 // Открытие, закрытие попапа карточек

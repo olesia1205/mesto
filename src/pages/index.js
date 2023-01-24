@@ -1,6 +1,6 @@
 import './index.css';
 
-import {popupProfilOpenButtonElement, nameProfil, jobProfil, avatarProfil, avatarCover, popupCardOpenButtonElement,
+import {popupProfilOpenButtonElement, nameProfile, jobProfile, avatarProfile, avatarCover, popupCardOpenButtonElement,
   cardsSection, popupImage, popupImageSubtitle, obj} from '../utils/constants.js'
 
 import Card from '../components/Card.js';
@@ -9,7 +9,6 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
-import PopupWithAvatar from '../components/PopupWithAvatar';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
@@ -34,9 +33,9 @@ const api = new Api({
 api.getAllNeededData()
   .then((result) => {
     const [dataForUserInfo, dataForInitialCards] = result;
-    console.log(result);
+    // console.log(result);
 
-    userInfo.setUserInfoFromApi(dataForUserInfo);
+    userInfo.setUserInfo(dataForUserInfo);
 
     const initialCards = dataForInitialCards;
 
@@ -45,11 +44,8 @@ api.getAllNeededData()
       renderer: (item) => {
         section.addItem(createCard(item));
       }
-    },
-    cardsSection
-    );
+    }, cardsSection);
     section.renderItems();
-
   })
   .catch(err => alert(err));
 
@@ -69,27 +65,43 @@ function createCard(cardData) {
       popupWithImage.openPopup(name, link);
     },
 
-    handleLikeClick: (cardId, cardLikeButton) => {
-      if(cardLikeButton.classList.contains('place__like-button_status_active')) {
+    handleLikeClick: (cardId) => {
+      if(card.isLiked()) {
         api.deleteLike(cardId)
           .then((response) => {
-            cardLikeButton.classList.remove('place__like-button_status_active');
-            card.updateLikes(response.likes);
+            card.updateLikesCount(response.likes);
           })
           .catch(err => console.log(err))
       } else {
         api.putLike(cardId)
           .then((response) => {
-            cardLikeButton.classList.add('place__like-button_status_active');
-            card.updateLikes(response.likes);
+            card.updateLikesCount(response.likes);
           })
           .catch(err => console.log(err))
       }
     },
 
+    // handleLikeClick: (cardId, cardLikeButton) => {
+    //   if(cardLikeButton.classList.contains('place__like-button_status_active')) {
+    //     api.deleteLike(cardId)
+    //       .then((response) => {
+    //         cardLikeButton.classList.remove('place__like-button_status_active');
+    //         card.updateLikesCount(response.likes);
+    //       })
+    //       .catch(err => console.log(err))
+    //   } else {
+    //     api.putLike(cardId)
+    //       .then((response) => {
+    //         cardLikeButton.classList.add('place__like-button_status_active');
+    //         card.updateLikesCount(response.likes);
+    //       })
+    //       .catch(err => console.log(err))
+    //   }
+    // },
+
     handleDeleteIconClick: (cardId) => {
       popupWithSubmit.openPopup();
-      popupWithSubmit.addTask(() => {
+      popupWithSubmit.setCallback(() => {
         api.deleteCard(cardId)
         .then(() => {
           popupWithSubmit.closePopup();
@@ -100,7 +112,7 @@ function createCard(cardData) {
     }
   },
   '.place__template',
-  userInfo.setUserData());
+  userInfo.getUserId());
 
   const cardElement = card.generateCard(cardData);
   return cardElement;
@@ -112,10 +124,11 @@ const popupWithProfil = new PopupWithForm({
   handleFormSubmit: (formValues) => {
     const data = {
       name: formValues["name"],
-      about: formValues["about"]
+      about: formValues["about"],
+      avatar: avatarProfile.src
     };
 
-    popupWithProfil.setPreloader();
+    popupWithProfil.setSubmitButtonText("Сохранение...");
     api.patchUserInfo(data);
     userInfo.setUserInfo(data);
     popupWithProfil.closePopup();
@@ -133,7 +146,7 @@ const popupWithCard = new PopupWithForm({
       alt: formValues["place-name"]
     };
 
-    popupWithCard.setPreloader();
+    popupWithCard.setSubmitButtonText("Сохранение...");
     api.postNewCard(data)
       .then((response) => {
         prependCard(response);
@@ -152,22 +165,22 @@ function prependCard(data) {
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
-  profilName: nameProfil,
-  profilJob: jobProfil,
-  profilAvatar: avatarProfil
+  profileName: nameProfile,
+  profileJob: jobProfile,
+  profileAvatar: avatarProfile
 });
 
 // Создание экземпляра класса PopupWithAvatar
-const popupWithAvatar = new PopupWithAvatar({
+const popupWithAvatar = new PopupWithForm({
   popupSelector: '.popup_type_avatar',
   handleFormSubmit: (formValues) => {
     const avatar = formValues["avatar-link"];
 
-    popupWithAvatar.setPreloader();
+    popupWithAvatar.setSubmitButtonText("Сохранение...");
     api.changeAvatar(avatar)
       .then(() => {
         popupWithAvatar.closePopup();
-        userInfo.changeAvatar(avatar);
+        userInfo.setUserAvatar(avatar);
       })
       .catch((err) => console.log(err));
   }
@@ -176,14 +189,14 @@ popupWithAvatar.setEventListeners();
 
 // Открытие попапа редактирования аватара пользователя
 avatarCover.addEventListener('click', function() {
-  popupWithAvatar.removePreloader();
+  popupWithAvatar.setSubmitButtonText("Сохранить");
   popupWithAvatar.openPopup();
   formValidators['popup-form-avatar'].resetValidation();
 });
 
 // Открытие попапа редактирования профиля пользователя
 popupProfilOpenButtonElement.addEventListener('click', function() {
-  popupWithProfil.removePreloader();
+  popupWithProfil.setSubmitButtonText("Сохранить");
   popupWithProfil.setInputValues(userInfo.getUserInfo());
   popupWithProfil.openPopup();
   formValidators['popup-form-profil'].resetValidation();
@@ -191,7 +204,7 @@ popupProfilOpenButtonElement.addEventListener('click', function() {
 
 // Открытие попапа карточек
 popupCardOpenButtonElement.addEventListener('click', function() {
-  popupWithCard.removePreloader();
+  popupWithCard.setSubmitButtonText("Создать");
   popupWithCard.openPopup();
   formValidators['popup-form-card'].resetValidation();
 });

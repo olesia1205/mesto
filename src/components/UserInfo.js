@@ -1,34 +1,31 @@
 export default class UserInfo {
-  constructor({profilName, profilJob, profilAvatar}) {
-    this._profilName = profilName;
-    this._profilJob = profilJob;
-    this._profilAvatar = profilAvatar;
+  constructor({profileName, profileJob, profileAvatar}) {
+    this._profileName = profileName;
+    this._profileJob = profileJob;
+    this._profileAvatar = profileAvatar;
   }
 
   getUserInfo() {
-    this._profilInfo = {};
-    this._profilInfo.name = this._profilName.textContent;
-    this._profilInfo.about = this._profilJob.textContent;
-    return this._profilInfo;
+    this._profileInfo = {};
+    this._profileInfo.name = this._profileName.textContent;
+    this._profileInfo.about = this._profileJob.textContent;
+    this._profileInfo.avatar = this._profileAvatar.src;
+    return this._profileInfo;
   }
 
   setUserInfo(data) {
-    this._profilName.textContent = data.name;
-    this._profilJob.textContent = data.about;
-  }
-
-  setUserInfoFromApi(data) {
-    this._profilName.textContent = data.name;
-    this._profilJob.textContent = data.about;
-    this._profilAvatar.src = data.avatar;
+    this._profileName.textContent = data.name;
+    this._profileJob.textContent = data.about;
+    this._profileAvatar.src = data.avatar;
     this._userData = data;
   }
 
-  setUserData() {
-    return this._userData;
+  setUserAvatar(avatar) {
+    this._profileAvatar.src = avatar;
   }
 
-  changeAvatar(avatar) {
-    this._profilAvatar.src = avatar;
+  getUserId() {
+    return this._userId = this._userData._id;
   }
+
 }

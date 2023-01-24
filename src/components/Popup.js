@@ -3,7 +3,6 @@ export default class Popup {
     this._popupSelector = popupSelector;
     this._popup = document.querySelector(this._popupSelector);
     this._handleEscClose = this.handleEscClose.bind(this);
-    this._submitButton = this._popup.querySelector('.popup__submit-button');
   }
 
   // Закрытие попапов по кнопке Escape
@@ -27,21 +26,10 @@ export default class Popup {
   // Закрытие попапов по Overlay и иконкам закрытия
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_is-opened')) {
+      if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains('popup__close-button')) {
         this.closePopup();
       }
-      else if (evt.target.classList.contains('popup__close-button')) {
-        this.closePopup()
-      }
     })
-  }
-
-  setPreloader() {
-    this._submitButton.textContent = "Сохранение..."
-  }
-
-  removePreloader() {
-    this._submitButton.textContent = this._submitButton.value;
   }
 }
 

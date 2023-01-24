@@ -22,8 +22,8 @@ export default class PopupWithSubmit extends Popup {
     this._submitButton.focus();
   }
 
-  addTask(task) {
-    this._handleFormSubmit = task;
+  setCallback(callback) {
+    this._handleFormSubmit = callback;
   }
 }
 
