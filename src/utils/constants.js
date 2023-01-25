@@ -1,41 +1,25 @@
-// Открытие, закрытие попапа редактирования профиля пользователяnt
-export const popups = document.querySelectorAll('.popup');
+// Открытие, закрытие попапа редактирования профиля пользователя
 export const popupProfilOpenButtonElement = document.querySelector('.profile__info-edit-button');
-export const popupProfilElement = document.querySelector('.popup_type_profil');
 
-export const formProfilElement = document.forms["popup-form-profil"];
-export const nameInput = formProfilElement.querySelector('.popup__input_info_name');
-export const jobInput = formProfilElement.querySelector('.popup__input_info_job');
-
-export const profilElement = document.querySelector('.profile');
-export const nameProfile = profilElement.querySelector('.profile__info-title');
-export const jobProfile = profilElement.querySelector('.profile__info-subtitle');
+export const profileElement = document.querySelector('.profile');
+export const nameProfile = profileElement.querySelector('.profile__info-title');
+export const jobProfile = profileElement.querySelector('.profile__info-subtitle');
 export const avatarProfile = document.querySelector('.profile__avatar');
 export const avatarCover = document.querySelector('.profile__avatar-cover');
 
 // Открытие, закрытие попапа карточек
 export const popupCardOpenButtonElement = document.querySelector('.profile__add-button');
-export const popupCardElement = document.querySelector('.popup_type_card');
-export const formCardElement = document.forms["popup-form-card"];
-export const popupInputCardElement = formCardElement.querySelector('.popup__input');
-export const popupCardSubmitButtonElement = popupCardElement.querySelector('.popup__submit-button');
 
 // Открытие, закрытие попапа с картинками
 export const popupImageElement = document.querySelector('.popup_type_image');
 export const popupImage = popupImageElement.querySelector('.popup__image');
 export const popupImageSubtitle = popupImageElement.querySelector('.popup__image-subtitle');
 
-// Открытие, закрытие попапа с согласием на удаление карточек
-export const popupSubmitElement = document.querySelector('.popup_type_confirm');
-export const submitElement = popupSubmitElement.querySelector('.popup__container');
-
 // Отрисовка карточек с местами при помощи JS, добавление новых карточек - переменные
 export const cardsSection = document.querySelector('.places');
 export const cardTemplate = cardsSection.querySelector('.place__template').content;
-export const cardTitleInput = formCardElement.querySelector('.popup__input_info_place-name');
-export const cardLinkInput = formCardElement.querySelector('.popup__input_info_place-link');
 
-export const obj = {
+export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit-button',
@@ -43,43 +27,3 @@ export const obj = {
   inputErrorClass: 'popup__input-error',
   errorClass: 'popup__input-error_active'
 }
-
-// import habarovsk from '../images/habarovsk.jpg';
-// import osetia from '../images/osetia.jpg';
-// import dagestan from '../images/dagestan.jpg';
-// import kholmogorsk from '../images/kholmogorsky-rayon.jpg';
-// import ivanovo from '../images/ivanovo.jpg';
-// import karachaevsk from '../images/karachaevsk.jpg';
-
-// export const initialCards = [
-//   {
-//     name: 'Хабаровск',
-//     link: habarovsk,
-//     alt: 'Хабаровск'
-//   },
-//   {
-//     name: 'Осетия',
-//     link: osetia,
-//     alt: 'Осетия'
-//   },
-//   {
-//     name: 'Дагестан',
-//     link: dagestan,
-//     alt: 'Дагестан'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: kholmogorsk,
-//     alt: 'Домбай'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: ivanovo,
-//     alt: 'Иваново'
-//   },
-//   {
-//     name: 'Карачаевск',
-//     link: karachaevsk,
-//     alt: 'Карачаевск'
-//   }
-// ]

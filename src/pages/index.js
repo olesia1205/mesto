@@ -1,7 +1,7 @@
 import './index.css';
 
 import {popupProfilOpenButtonElement, nameProfile, jobProfile, avatarProfile, avatarCover, popupCardOpenButtonElement,
-  cardsSection, popupImage, popupImageSubtitle, obj} from '../utils/constants.js'
+  cardsSection, popupImage, popupImageSubtitle, validationConfig} from '../utils/constants.js'
 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -39,15 +39,85 @@ api.getAllNeededData()
 
     const initialCards = dataForInitialCards;
 
-    const section = new Section({
-      items: initialCards,
-      renderer: (item) => {
-        section.addItem(createCard(item));
+    const section = new Section(
+      {
+        cardsData: initialCards,
+        renderer: (cardData) => {
+          section.addCard(createCard(cardData));
+        },
+      },
+      cardsSection
+    );
+    section.renderCards();
+
+    // Создание экземпляра класса PopupWithForm для создания новой карточки
+    const popupWithCard = new PopupWithForm({
+      popupSelector: '.popup_type_card',
+      handleFormSubmit: (formValues) => {
+        const data = {
+          name: formValues["place-name"],
+          link: formValues["place-link"],
+          alt: formValues["place-name"]
+        };
+
+        popupWithCard.setSubmitButtonText("Сохранение...");
+        api.postNewCard(data)
+          .then((response) => {
+            prependCard(response);
+            popupWithCard.closePopup();
+          })
+          .catch(err => console.log(err))
+          .finally(() => {
+            popupWithCard.setSubmitButtonText("Создать");
+          });
       }
-    }, cardsSection);
-    section.renderItems();
+    });
+    popupWithCard.setEventListeners();
+
+    // Отрисовка новых карточек при сабмите данных из формы в начале секции
+    function prependCard(data) {
+      const cardElement = createCard(data);
+      section.prependCard(cardElement);
+    }
+
+    // Открытие попапа редактирования аватара пользователя
+    avatarCover.addEventListener('click', function() {
+      popupWithAvatar.openPopup();
+      formValidators['popup-form-avatar'].resetValidation();
+    });
+
+    // Открытие попапа редактирования профиля пользователя
+    popupProfilOpenButtonElement.addEventListener('click', function() {
+      popupWithProfil.setInputValues(userInfo.getUserInfo());
+      popupWithProfil.openPopup();
+    });
+
+    // Открытие попапа карточек
+    popupCardOpenButtonElement.addEventListener('click', function() {
+      popupWithCard.openPopup();
+      formValidators['popup-form-card'].resetValidation();
+    });
+
+    // Создание экземпляров валидаторов всех форм в одном объекте formValidators
+    const formValidators = {}
+
+    // Включение валидации
+    const enableValidation = (validationConfig) => {
+      const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
+      formList.forEach((formElement) => {
+        const validator = new FormValidator(validationConfig, formElement);
+
+        // получаем данные из атрибута `name` у формы
+        const formName = formElement.name;
+        // записываем в объект под именем формы
+        formValidators[formName] = validator;
+        validator.enableValidation();
+      });
+    };
+
+    enableValidation(validationConfig);
   })
-  .catch(err => alert(err));
+  .catch(err => alert(err))
 
 // Создание экземпляра класса Card
 function createCard(cardData) {
@@ -69,52 +139,36 @@ function createCard(cardData) {
       if(card.isLiked()) {
         api.deleteLike(cardId)
           .then((response) => {
-            card.updateLikesCount(response.likes);
+            card.updateLikesCount(response);
+            card.setLikesView(response.likes);
           })
           .catch(err => console.log(err))
       } else {
         api.putLike(cardId)
           .then((response) => {
-            card.updateLikesCount(response.likes);
+            card.updateLikesCount(response);
+            card.setLikesView(response.likes);
           })
           .catch(err => console.log(err))
       }
     },
 
-    // handleLikeClick: (cardId, cardLikeButton) => {
-    //   if(cardLikeButton.classList.contains('place__like-button_status_active')) {
-    //     api.deleteLike(cardId)
-    //       .then((response) => {
-    //         cardLikeButton.classList.remove('place__like-button_status_active');
-    //         card.updateLikesCount(response.likes);
-    //       })
-    //       .catch(err => console.log(err))
-    //   } else {
-    //     api.putLike(cardId)
-    //       .then((response) => {
-    //         cardLikeButton.classList.add('place__like-button_status_active');
-    //         card.updateLikesCount(response.likes);
-    //       })
-    //       .catch(err => console.log(err))
-    //   }
-    // },
-
     handleDeleteIconClick: (cardId) => {
       popupWithSubmit.openPopup();
       popupWithSubmit.setCallback(() => {
         api.deleteCard(cardId)
-        .then(() => {
-          popupWithSubmit.closePopup();
-          card.removeCard();
-        })
-        .catch(err => console.log(err))
+          .then(() => {
+            popupWithSubmit.closePopup();
+            card.removeCard();
+          })
+          .catch(err => console.log(err))
       });
     }
   },
   '.place__template',
   userInfo.getUserId());
 
-  const cardElement = card.generateCard(cardData);
+  const cardElement = card.generateCard();
   return cardElement;
 }
 
@@ -129,39 +183,18 @@ const popupWithProfil = new PopupWithForm({
     };
 
     popupWithProfil.setSubmitButtonText("Сохранение...");
-    api.patchUserInfo(data);
-    userInfo.setUserInfo(data);
-    popupWithProfil.closePopup();
+    api.patchUserInfo(data)
+      .then(() => {
+        userInfo.setUserInfo(data);
+        popupWithProfil.closePopup();
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        popupWithProfil.setSubmitButtonText("Сохранить");
+      });
   }
 });
 popupWithProfil.setEventListeners();
-
-// Создание экземпляра класса PopupWithForm для создания новой карточки
-const popupWithCard = new PopupWithForm({
-  popupSelector: '.popup_type_card',
-  handleFormSubmit: (formValues) => {
-    const data = {
-      name: formValues["place-name"],
-      link: formValues["place-link"],
-      alt: formValues["place-name"]
-    };
-
-    popupWithCard.setSubmitButtonText("Сохранение...");
-    api.postNewCard(data)
-      .then((response) => {
-        prependCard(response);
-        popupWithCard.closePopup();
-      })
-      .catch(err => console.log(err));
-  }
-});
-popupWithCard.setEventListeners();
-
-// Отрисовка новых карточек при сабмите данных из формы в начале секции
-function prependCard(data) {
-  const cardElement = createCard(data);
-  cardsSection.prepend(cardElement);
-}
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
@@ -182,48 +215,10 @@ const popupWithAvatar = new PopupWithForm({
         popupWithAvatar.closePopup();
         userInfo.setUserAvatar(avatar);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupWithAvatar.setSubmitButtonText("Сохранить");
+      });
   }
 });
 popupWithAvatar.setEventListeners();
-
-// Открытие попапа редактирования аватара пользователя
-avatarCover.addEventListener('click', function() {
-  popupWithAvatar.setSubmitButtonText("Сохранить");
-  popupWithAvatar.openPopup();
-  formValidators['popup-form-avatar'].resetValidation();
-});
-
-// Открытие попапа редактирования профиля пользователя
-popupProfilOpenButtonElement.addEventListener('click', function() {
-  popupWithProfil.setSubmitButtonText("Сохранить");
-  popupWithProfil.setInputValues(userInfo.getUserInfo());
-  popupWithProfil.openPopup();
-  formValidators['popup-form-profil'].resetValidation();
-});
-
-// Открытие попапа карточек
-popupCardOpenButtonElement.addEventListener('click', function() {
-  popupWithCard.setSubmitButtonText("Создать");
-  popupWithCard.openPopup();
-  formValidators['popup-form-card'].resetValidation();
-});
-
-// Создание экземпляров валидаторов всех форм в одном объекте formValidators
-const formValidators = {}
-
-// Включение валидации
-const enableValidation = (obj) => {
-  const formList = Array.from(document.querySelectorAll(obj.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(obj, formElement);
-
-    // получаем данные из атрибута `name` у формы
-    const formName = formElement.getAttribute('name');
-    // записываем в объект под именем формы
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(obj);
