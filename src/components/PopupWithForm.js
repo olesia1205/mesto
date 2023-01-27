@@ -42,5 +42,4 @@ export default class PopupWithForm extends Popup {
   setSubmitButtonText(text) {
     this._submitButton.textContent = text;
   }
-
 }

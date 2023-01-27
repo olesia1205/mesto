@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({cardData, handleCardClick, handleLikeClick, handleDeleteIconClick}, templateSelector, userInfo) {
+  constructor({cardData, handleCardClick, handleLikeClick, handleDeleteIconClick}, templateSelector, userId) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._alt = cardData.alt;
@@ -11,7 +11,7 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
     this._templateSelector = templateSelector;
-    this._userId = userInfo;
+    this._userId = userId;
   }
 
   _getTemplate() {
@@ -67,15 +67,12 @@ export default class Card {
   }
 
   setLikesView(likes) {
+    this._likes = likes;
     this._cardLikeNumber.textContent = likes.length;
     if (this.isLiked()) {
       this._cardLikeButton.classList.add('place__like-button_status_active');
     } else {
       this._cardLikeButton.classList.remove('place__like-button_status_active');
     }
-  }
-
-  updateLikesCount(cardData) {
-    this._likes = cardData.likes;
   }
 }
