@@ -82,7 +82,6 @@ function prependItem(data) {
   section.prependItem(cardElement);
 }
 
-
 // Создание экземпляра класса PopupWithForm для редактирования профиля пользователя
 const popupWithProfile = new PopupWithForm({
   popupSelector: '.popup_type_profile',
